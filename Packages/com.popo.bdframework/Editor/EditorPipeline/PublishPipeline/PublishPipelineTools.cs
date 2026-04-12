@@ -20,9 +20,43 @@ using UnityEngine;
 
 namespace BDFramework.Editor
 {
+    /// <summary>
+    /// 发布流水线的服务器资源整理工具。
+    /// 该类型负责把本地产物目录转换成文件服务器可消费的 hash 布局，并在生成 <c>assets.info</c> 时统一剔除 editor-only 与构建期临时文件。
+    /// 例如 AssetBundle 发布阶段会在这里过滤 <c>package_build.info</c>、<c>art_assets/EditorBuild.Info</c>、<c>buildlogtep.json</c> 等不应上云的元数据。
+    /// </summary>
     static public class PublishPipelineTools
     {
         static public string UPLOAD_FOLDER_SUFFIX = "_ReadyToUpload";
+
+        /// <summary>
+        /// 判断某个发布目录内的相对路径是否属于服务器清单不应收录的本地元数据。
+        /// 这里统一处理 editor-only 文件、SBP 构建日志和母包元数据，避免它们被写入 <c>assets.info</c> 或上传到文件服务器。
+        /// </summary>
+        private static bool IsExcludedServerAssetLocalPath(string localPath)
+        {
+            if (string.IsNullOrEmpty(localPath))
+            {
+                return false;
+            }
+
+            var normalizedLocalPath = localPath.Replace("\\", "/");
+            if (normalizedLocalPath.Equals(BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH,
+                    StringComparison.OrdinalIgnoreCase) ||
+                normalizedLocalPath.Equals(BResources.ASSETS_INFO_PATH, StringComparison.OrdinalIgnoreCase) ||
+                normalizedLocalPath.Equals(BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH, StringComparison.OrdinalIgnoreCase) ||
+                normalizedLocalPath.Equals("build_result.info", StringComparison.OrdinalIgnoreCase) ||
+                normalizedLocalPath.Equals("package_build.info", StringComparison.OrdinalIgnoreCase) ||
+                normalizedLocalPath.Equals(string.Format("{0}/{0}", BResources.ART_ASSET_ROOT_PATH),
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            var fileName = Path.GetFileName(normalizedLocalPath);
+            return fileName.Equals(BResources.SBPBuildLog, StringComparison.OrdinalIgnoreCase) ||
+                   fileName.Equals(BResources.SBPBuildLog2, StringComparison.OrdinalIgnoreCase);
+        }
 
         /// <summary>
         /// 资源转hash
@@ -93,17 +127,9 @@ namespace BDFramework.Editor
         static public List<AssetItem> GetGameAssetItemList(string assetsRootPath, RuntimePlatform platform)
         {
             Debug.Log($"<color=red>------>生成服务器配置:{platform}</color>");
-            //黑名单
-            List<string> blackFileList = new List<string>()
-            {
-                BResources.EDITOR_ART_ASSET_BUILD_INFO_PATH, //
-                BResources.ASSETS_INFO_PATH, //
-                BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH, //
-                "build_result.info", //SBP打包结果
-                string.Format("{0}/{0}", BResources.ART_ASSET_ROOT_PATH), //
-            };
             //混淆文件添加黑名单
-            blackFileList.AddRange(BuildTools_AssetBundleV2.GetMixAssets());
+            var mixAssets = new HashSet<string>(BuildTools_AssetBundleV2.GetMixAssets(),
+                StringComparer.OrdinalIgnoreCase);
 
             //加载assetbundle配置
             assetsRootPath = IPath.Combine(assetsRootPath, BApplication.GetPlatformLoadPath(platform));
@@ -129,11 +155,16 @@ namespace BDFramework.Editor
 
                 //本地的相对路径 
                 var localPath = assetPath.Replace("\\", "/").Replace(assetsRootPath + "/", "");
-                //黑名单
-                var ret = blackFileList.FirstOrDefault((bf) => localPath.Equals(bf, StringComparison.OrdinalIgnoreCase) || Path.GetFileName(localPath).Equals(bf));
-                if (ret != null)
+                // Phase 1: 统一剔除 editor-only 元数据、SBP 日志和混淆产物，避免进入 assets.info。
+                if (IsExcludedServerAssetLocalPath(localPath))
                 {
-                    Debug.Log("【黑名单】剔除:" + ret);
+                    Debug.Log("【黑名单】剔除:" + localPath);
+                    continue;
+                }
+
+                if (mixAssets.Contains(localPath) || mixAssets.Contains(Path.GetFileName(localPath)))
+                {
+                    Debug.Log("【黑名单】剔除:" + localPath);
                     continue;
                 }
 

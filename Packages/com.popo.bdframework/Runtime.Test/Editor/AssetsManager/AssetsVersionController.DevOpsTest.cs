@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr;
+using BDFramework.ResourceMgr.V2;
 using BDFramework.Sql;
 using NUnit.Framework;
 using UnityEditor;
@@ -119,6 +120,15 @@ namespace BDFramework.EditorTest.AssetsManager
         public void FindFileServerRepresentativeAsset_PicksRealPayloadAssets()
         {
             VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets();
+        }
+
+        /// <summary>
+        /// 验证 AssetBundle 本地打开校验样本会按 art_assets.info 中所有非空 AssetBundlePath 去重后输出。
+        /// </summary>
+        [Test]
+        public void CollectFileServerAssetBundleValidationRelativePaths_DeduplicatesNonEmptyBundlePaths()
+        {
+            VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths();
         }
 
         /// <summary>
@@ -503,6 +513,27 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证 art_assets.info 驱动的 AssetBundle 本地校验路径提取结果，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths()
+        {
+            var validationRelativePaths = AssetsVersionController.CollectFileServerAssetBundleValidationRelativePaths(
+                new List<AssetBundleItem>()
+                {
+                    new AssetBundleItem(1, "Assets/Hero.prefab", "hero.bundle", 0, string.Empty, 0),
+                    new AssetBundleItem(2, "Assets/HeroVariant.prefab", "hero.bundle", 0, string.Empty, 0),
+                    new AssetBundleItem(3, string.Empty, "shared.bundle", 0, string.Empty, 0),
+                    new AssetBundleItem(4, "Assets/Config.asset", string.Empty, 0, string.Empty, 0),
+                });
+
+            EnsureEqual(2L, validationRelativePaths.Count, "AssetBundle 本地校验路径数量不匹配。");
+            EnsureEqual("art_assets/hero.bundle", validationRelativePaths[0],
+                "第一个 AssetBundle 本地校验路径不匹配。");
+            EnsureEqual("art_assets/shared.bundle", validationRelativePaths[1],
+                "第二个 AssetBundle 本地校验路径不匹配。");
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证缺少本地 package_build.info 时的无回退读取结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyLoadLocalPackageBuildInfoReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing()
@@ -664,7 +695,8 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
-        /// 以主线程直接调用方式验证代表性本地加载总入口在 AssetBundle 文件缺失时会立即返回底层错误。
+        /// 以主线程直接调用方式验证代表性本地加载总入口会先通过第一个真实 AssetBundle，
+        /// 再在第二个缺失路径上返回底层错误，从而证明 AssetBundle 校验会按 art_assets.info 解析结果逐个遍历。
         /// 该校验覆盖 CI batchmode 外层同步桥接在后台阶段结束后回到主线程执行的最终路径。
         /// </summary>
         internal static void VerifyValidateFileServerRepresentativeLocalLoadsReturnsAssetBundleMissingFileErrorOnMainThread()
@@ -674,15 +706,43 @@ namespace BDFramework.EditorTest.AssetsManager
             Directory.CreateDirectory(tempDir);
             var localCodePath = Path.Combine(tempDir, "Assembly-CSharp-firstpass.zlua.bytes");
             var sourceAssemblyPath = typeof(AssetsVersionControllerDevOpsTest).Assembly.Location;
+            var assetRootRelativePath = $"Assets/__FileServerVerifyTemp/{Guid.NewGuid():N}";
+            var assetFileRelativePath = $"{assetRootRelativePath}/verify_asset.txt";
+            var assetRootAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetRootRelativePath);
+            var assetFileAbsolutePath = Path.Combine(Directory.GetCurrentDirectory(), assetFileRelativePath);
+            var outputRoot = Path.Combine(tempDir, "bundle-output");
+            var bundleName = $"file-server-verify-{Guid.NewGuid():N}";
+            var firstBundlePath = Path.Combine(outputRoot, bundleName);
             var missingBundlePath = Path.Combine(tempDir, "missing.bundle");
 
             try
             {
                 File.Copy(sourceAssemblyPath, localCodePath, true);
+                Directory.CreateDirectory(assetRootAbsolutePath);
+                Directory.CreateDirectory(outputRoot);
+                File.WriteAllText(assetFileAbsolutePath, "verify-bundle-payload", Encoding.UTF8);
+
+                AssetDatabase.ImportAsset(assetFileRelativePath, ImportAssetOptions.ForceSynchronousImport);
+                var importer = AssetImporter.GetAtPath(assetFileRelativePath);
+                if (importer == null)
+                {
+                    throw new InvalidOperationException($"无法获取测试资源导入器 path={assetFileRelativePath}");
+                }
+
+                importer.assetBundleName = bundleName;
+                importer.SaveAndReimport();
+
+                var buildManifest = BuildPipeline.BuildAssetBundles(
+                    outputRoot,
+                    BuildAssetBundleOptions.None,
+                    ResolveHostAssetBundleBuildTarget());
+                EnsureTrue(buildManifest != null, "测试 AssetBundle 构建结果不应为 null。");
+                EnsureTrue(File.Exists(firstBundlePath), "测试 AssetBundle 输出文件不存在。");
 
                 var controller = new AssetsVersionController();
                 var error = controller
-                    .ValidateFileServerRepresentativeLocalLoads(localCodePath, missingBundlePath,
+                    .ValidateFileServerRepresentativeLocalLoads(localCodePath,
+                        new List<string>() {firstBundlePath, missingBundlePath},
                         Path.Combine(tempDir, "unused.db"))
                     .GetAwaiter()
                     .GetResult();
@@ -694,6 +754,9 @@ namespace BDFramework.EditorTest.AssetsManager
             }
             finally
             {
+                AssetDatabase.RemoveAssetBundleName(bundleName, true);
+                AssetDatabase.DeleteAsset(assetRootRelativePath);
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
                 if (Directory.Exists(tempDir))
                 {
                     Directory.Delete(tempDir, true);
@@ -907,7 +970,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 22;
+            const int totalCheckCount = 23;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -950,6 +1013,10 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.FindFileServerRepresentativeAsset_PicksRealPayloadAssets),
                 AssetsVersionControllerDevOpsTest.VerifyFindFileServerRepresentativeAssetPicksRealPayloadAssets,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.CollectFileServerAssetBundleValidationRelativePaths_DeduplicatesNonEmptyBundlePaths),
+                AssetsVersionControllerDevOpsTest.VerifyCollectFileServerAssetBundleValidationRelativePathsDeduplicatesNonEmptyBundlePaths,
                 reportBuilder, ref failedCount);
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.LoadLocalPackageBuildInfo_ReturnsEmptyInfoWhenFallbackDisabledAndLocalFileMissing),

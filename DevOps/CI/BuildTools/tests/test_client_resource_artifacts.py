@@ -162,18 +162,22 @@ def test_prepare_code_upload_source_requires_declared_script_files(tmp_path: Pat
         )
 
 
-def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: Path) -> None:
-    """验证 AssetBundle 暂存同时保留显式 package_build.info、哈希负载文件和必需元数据。"""
+def test_prepare_assetbundle_upload_source_filters_editor_only_metadata(tmp_path: Path) -> None:
+    """验证 AssetBundle 暂存会过滤 package_build.info 与 editor-only 构建元数据。"""
     output_root = tmp_path / "output"
     platform_dir = output_root / "windows"
     (platform_dir / ART_ASSETS_DIRNAME).mkdir(parents=True)
     (platform_dir / ART_ASSETS_DIRNAME / "catalog.bytes").write_bytes(b"catalog")
+    (platform_dir / ART_ASSETS_DIRNAME / "buildlogtep.json").write_text("{}", encoding="utf-8")
+    (platform_dir / ART_ASSETS_DIRNAME / "EditorBuild.Info").write_text("editor", encoding="utf-8")
     (platform_dir / PACKAGE_BUILD_INFO_FILENAME).write_text("pkg", encoding="utf-8")
     write_asset_info(
         platform_dir / ASSETS_INFO_FILENAME,
         [
             ("1", "100", PACKAGE_BUILD_INFO_FILENAME, "0.1"),
             ("2", "101", "art_assets/catalog.bytes", "0.2"),
+            ("3", "102", "art_assets/buildlogtep.json", "0.3"),
+            ("4", "103", "art_assets/EditorBuild.Info", "0.4"),
         ],
     )
 
@@ -183,11 +187,17 @@ def test_prepare_assetbundle_upload_source_keeps_art_assets_and_infos(tmp_path: 
         staging_dir=tmp_path / "staging",
     )
 
-    assert (prepared / PACKAGE_BUILD_INFO_FILENAME).read_text(encoding="utf-8") == "pkg"
-    assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
+    assert not (prepared / PACKAGE_BUILD_INFO_FILENAME).exists()
+    assert not (prepared / "100").exists()
     assert (prepared / "101").read_bytes() == b"catalog"
+    assert not (prepared / "102").exists()
+    assert not (prepared / "103").exists()
     assert not (prepared / ART_ASSETS_DIRNAME).exists()
-    assert "art_assets/catalog.bytes" in (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
+    prepared_assets_info = (prepared / ASSETS_INFO_FILENAME).read_text(encoding="utf-8")
+    assert "art_assets/catalog.bytes" in prepared_assets_info
+    assert PACKAGE_BUILD_INFO_FILENAME not in prepared_assets_info
+    assert "art_assets/buildlogtep.json" not in prepared_assets_info
+    assert "art_assets/EditorBuild.Info" not in prepared_assets_info
     assert not (prepared / ASSETS_SUBPACK_INFO_FILENAME).exists()
 
 
@@ -221,7 +231,8 @@ def test_prepare_assetbundle_upload_source_falls_back_to_art_assets_info_when_as
         staging_dir=tmp_path / "staging",
     )
 
-    assert (prepared / "100").read_text(encoding="utf-8") == "pkg"
+    assert not (prepared / PACKAGE_BUILD_INFO_FILENAME).exists()
+    assert not (prepared / "100").exists()
     assert (prepared / "101").read_text(encoding="utf-8") == "type"
     assert "catalog.bytes" in (prepared / "102").read_text(encoding="utf-8")
     assert (prepared / "555").read_bytes() == b"catalog"
@@ -810,8 +821,8 @@ def test_upload_client_res_assetbundle_invokes_aggregate_validation(
         log_prefix="[BuildAssetbundle][Android]",
     )
 
-    assert len(results) == 4
-    assert any(result.remote_path.endswith(f"/{PACKAGE_BUILD_INFO_FILENAME}") for result in results)
+    assert len(results) == 2
+    assert all(not result.remote_path.endswith(f"/{PACKAGE_BUILD_INFO_FILENAME}") for result in results)
     assert captured["settings"] == settings
     assert captured["log_prefix"] == "[BuildAssetbundle][Android]"
     assert captured["summary"].remote_root == "ClientRes_Assetbundle_android/77"

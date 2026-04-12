@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BDFramework.Asset;
 using BDFramework.Core.Tools;
+using BDFramework.ResourceMgr.V2;
 using BDFramework.Sql;
 using Cysharp.Threading.Tasks;
 using LitJson;
@@ -105,6 +106,7 @@ namespace BDFramework.ResourceMgr
 
         /// <summary>
         /// 单个组件的远端上下文，包含下载判定所需的 assets.info、package_build.info 和分包配置。
+        /// AssetBundle 组件如果不再显式上传 package_build.info，会在这里用当前组件版本生成可合并的占位元数据。
         /// </summary>
         internal sealed class FileServerComponentContext
         {
@@ -210,6 +212,12 @@ namespace BDFramework.ResourceMgr
             public string CodeAssetLocalPath { get; set; } = string.Empty;
 
             public string AssetBundleAssetLocalPath { get; set; } = string.Empty;
+
+            /// <summary>
+            /// 按 art_assets.info 解析出的去重 AssetBundle 本地校验路径集合。
+            /// 这里保留完整列表，供 CI BatchMode 在主线程上逐个执行 LoadFromFile 校验。
+            /// </summary>
+            public List<string> AssetBundleAssetLocalPaths { get; set; } = new List<string>();
 
             public string TableAssetLocalPath { get; set; } = string.Empty;
 
@@ -463,7 +471,7 @@ namespace BDFramework.ResourceMgr
 
             var representativeLoadError = ValidateFileServerRepresentativeLocalLoads(
                     result.CodeAssetLocalPath,
-                    result.AssetBundleAssetLocalPath,
+                    result.AssetBundleAssetLocalPaths,
                     result.TableAssetLocalPath)
                 .GetAwaiter()
                 .GetResult();
@@ -484,7 +492,7 @@ namespace BDFramework.ResourceMgr
             }
 
             LogFileServerFlow(
-                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} ab={result.AssetBundleAssetLocalPath} table={result.TableAssetLocalPath}",
+                $"CI BatchMode 文件服务器验证完成 version={result.ActualVersion} code={result.CodeAssetLocalPath} abFirst={result.AssetBundleAssetLocalPath} abCount={result.AssetBundleAssetLocalPaths.Count} table={result.TableAssetLocalPath}",
                 Color.green);
             return result;
         }
@@ -661,6 +669,34 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 从 art_assets.info 的解析结果里提取去重后的 AssetBundle 相对路径，供 CI BatchMode 做逐个 LoadFromFile 校验。
+        /// </summary>
+        internal static List<string> CollectFileServerAssetBundleValidationRelativePaths(
+            IEnumerable<AssetBundleItem> assetBundleItems)
+        {
+            return AssetsVersionControllerDevOpsPureLogic.CollectFileServerAssetBundleValidationRelativePaths(
+                assetBundleItems);
+        }
+
+        /// <summary>
+        /// 从当前本地下载目录的 art_assets.info 解析出需要逐个本地打开校验的 AssetBundle 绝对路径。
+        /// 这里故意依赖运行时同源的 AssetBundleConfigLoader，避免 CI 校验和正式加载路径对配置解析出现分叉。
+        /// </summary>
+        private static List<string> ResolveFileServerAssetBundleValidationLocalPaths(string firstLoadDir)
+        {
+            if (string.IsNullOrEmpty(firstLoadDir) || !Directory.Exists(firstLoadDir))
+            {
+                return new List<string>();
+            }
+
+            var configLoader = new AssetBundleConfigLoader();
+            configLoader.Load(firstLoadDir);
+            return CollectFileServerAssetBundleValidationRelativePaths(configLoader.AssetbundleItemList)
+                .Select(relativePath => IPath.Combine(firstLoadDir, relativePath))
+                .ToList();
+        }
+
+        /// <summary>
         /// CI BatchMode 的显式文件服务器下载验证入口。
         /// 这条路径会强制读取远端共享版控、重置本地缓存、真实下载 Code/AssetBundle/Table 三类差异资源，
         /// 再校验本地元数据和代表性样本文件，确保 TeamCity 验证不是被旧缓存或母包残留短路。
@@ -729,7 +765,7 @@ namespace BDFramework.ResourceMgr
                 resolveResult.State = new FileServerVersionControllerState();
             }
 
-            // Phase 3: 对 Code / AssetBundle / Table 分别读取远端上下文，并挑出每类的代表性验证样本。
+            // Phase 3: 对 Code / AssetBundle / Table 分别读取远端上下文，并先挑出 Code / Table 的代表性验证样本。
             var componentContexts = new Dictionary<FileServerComponentKind, FileServerComponentContext>();
             var allowComponentContextCacheFallback = ShouldUseCachedFileServerComponentContextOnFailure(
                 useCacheOnFailure: true, strictRemoteVerification: true);
@@ -776,21 +812,18 @@ namespace BDFramework.ResourceMgr
             }
 
             var codeAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.Code, codeContext.AssetItems);
-            var assetBundleAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.AssetBundle,
-                assetBundleContext.AssetItems);
             var tableAsset = FindFileServerRepresentativeAsset(FileServerComponentKind.Table, tableContext.AssetItems);
-            if (codeAsset == null || assetBundleAsset == null || tableAsset == null)
+            if (codeAsset == null || tableAsset == null)
             {
-                result.Error = "文件服务器验证缺少 Code / AssetBundle / Table 的代表性资源样本。";
+                result.Error = "文件服务器验证缺少 Code / Table 的代表性资源样本。";
                 return result;
             }
 
             LogFileServerFlow(
-                $"代表性资源样本已选中 code={codeAsset.LocalPath} assetBundle={assetBundleAsset.LocalPath} table={tableAsset.LocalPath}",
+                $"代表性资源样本已选中 code={codeAsset.LocalPath} assetBundle=defer-to-art_assets.info table={tableAsset.LocalPath}",
                 Color.green);
 
             result.CodeAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, codeAsset.LocalPath);
-            result.AssetBundleAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, assetBundleAsset.LocalPath);
             result.TableAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, tableAsset.LocalPath);
 
             // Phase 4: 强制按远端结果重建差异列表并执行真实下载，再重建本地 package_build.info / assets.info。
@@ -835,6 +868,19 @@ namespace BDFramework.ResourceMgr
                 result.Error = validateError;
                 return result;
             }
+
+            var assetBundleAssetLocalPaths = ResolveFileServerAssetBundleValidationLocalPaths(resolveResult.FirstLoadDir);
+            if (assetBundleAssetLocalPaths.Count <= 0)
+            {
+                result.Error = "文件服务器验证未能从 art_assets.info 解析出任何 AssetBundle 加载样本。";
+                return result;
+            }
+
+            result.AssetBundleAssetLocalPaths = assetBundleAssetLocalPaths;
+            result.AssetBundleAssetLocalPath = assetBundleAssetLocalPaths[0];
+            LogFileServerFlow(
+                $"AssetBundle 本地加载样本已根据 art_assets.info 解析 count={assetBundleAssetLocalPaths.Count} first={result.AssetBundleAssetLocalPath}",
+                Color.green);
 
             LogFileServerFlow("文件服务器全量资源校验通过，等待主线程执行代表性本地加载校验。", Color.green);
             return result;
@@ -1395,6 +1441,23 @@ namespace BDFramework.ResourceMgr
             return new Tuple<string, List<SubPackageConfigItem>>(null, new List<SubPackageConfigItem>());
         }
 
+        /// <summary>
+        /// 为不再显式上传 package_build.info 的组件生成最小可合并元数据。
+        /// 这里用组件版本回填对应字段，保证最终回写到本地的 package_build.info 仍能通过三段版控校验。
+        /// </summary>
+        private static void PopulateSyntheticFileServerComponentPackageBuildInfo(FileServerComponentContext context)
+        {
+            if (context == null)
+            {
+                return;
+            }
+
+            context.PackageBuildInfo = NormalizeFileServerComponentPackageBuildInfo(context.ComponentKind,
+                context.Version,
+                new ClientPackageBuildInfo());
+            context.PackageBuildContent = JsonMapper.ToJson(context.PackageBuildInfo);
+        }
+
         private async Task<Tuple<string, FileServerComponentContext>> LoadFileServerComponentContext(
             string serverUrl,
             string platformPath,
@@ -1414,32 +1477,55 @@ namespace BDFramework.ResourceMgr
                 FileServerPackageBuildInfoPath));
             if (!packageBuildDownload.Item1)
             {
-                if (useCacheOnFailure)
+                if (componentKind == FileServerComponentKind.AssetBundle)
                 {
-                    var cachedContext = LoadCachedFileServerComponentContext(GetFileServerSharedCacheDir(platformPath),
-                        componentKind, componentVersion);
-                    if (cachedContext != null)
+                    PopulateSyntheticFileServerComponentPackageBuildInfo(context);
+                    LogFileServerFlow(
+                        $"文件服务器组件元数据缺少 package_build.info，使用构建号生成占位元数据 component={componentKind} version={componentVersion}",
+                        Color.yellow);
+                }
+                else
+                {
+                    if (useCacheOnFailure)
                     {
-                        return new Tuple<string, FileServerComponentContext>(null, cachedContext);
+                        var cachedContext = LoadCachedFileServerComponentContext(GetFileServerSharedCacheDir(platformPath),
+                            componentKind, componentVersion);
+                        if (cachedContext != null)
+                        {
+                            return new Tuple<string, FileServerComponentContext>(null, cachedContext);
+                        }
+                    }
+
+                    return new Tuple<string, FileServerComponentContext>($"文件服务器下载 package_build.info 失败:{remoteRoot}",
+                        null);
+                }
+            }
+
+            else
+            {
+                try
+                {
+                    context.PackageBuildContent = packageBuildDownload.Item3;
+                    context.PackageBuildInfo = NormalizeFileServerComponentPackageBuildInfo(componentKind,
+                        componentVersion,
+                        JsonMapper.ToObject<ClientPackageBuildInfo>(packageBuildDownload.Item3)
+                        ?? new ClientPackageBuildInfo());
+                }
+                catch (Exception e)
+                {
+                    if (componentKind == FileServerComponentKind.AssetBundle)
+                    {
+                        PopulateSyntheticFileServerComponentPackageBuildInfo(context);
+                        LogFileServerFlow(
+                            $"文件服务器组件元数据解析失败，使用构建号生成占位元数据 component={componentKind} version={componentVersion} err={e.Message}",
+                            Color.yellow);
+                    }
+                    else
+                    {
+                        return new Tuple<string, FileServerComponentContext>($"文件服务器解析 package_build.info 失败:{e.Message}",
+                            null);
                     }
                 }
-
-                return new Tuple<string, FileServerComponentContext>($"文件服务器下载 package_build.info 失败:{remoteRoot}",
-                    null);
-            }
-
-            try
-            {
-                context.PackageBuildContent = packageBuildDownload.Item3;
-                context.PackageBuildInfo = NormalizeFileServerComponentPackageBuildInfo(componentKind,
-                    componentVersion,
-                    JsonMapper.ToObject<ClientPackageBuildInfo>(packageBuildDownload.Item3)
-                    ?? new ClientPackageBuildInfo());
-            }
-            catch (Exception e)
-            {
-                return new Tuple<string, FileServerComponentContext>($"文件服务器解析 package_build.info 失败:{e.Message}",
-                    null);
             }
 
             if (componentKind != FileServerComponentKind.Table)
@@ -1645,6 +1731,7 @@ namespace BDFramework.ResourceMgr
         /// <summary>
         /// 为单个文件服务器网络请求施加显式超时，并在超时后执行调用方提供的取消动作。
         /// 这样 CI 遇到半开连接或无响应 socket 时，会以明确异常结束，而不是无限挂起。
+        /// 同时避免在 Unity 主线程用同步等待结果时捕获编辑器上下文，导致超时分支续体无法恢复。
         /// </summary>
         internal static async Task<T> AwaitFileServerRequestWithTimeout<T>(
             Task<T> requestTask,
@@ -1659,14 +1746,14 @@ namespace BDFramework.ResourceMgr
 
             if (timeout <= TimeSpan.Zero)
             {
-                return await requestTask;
+                return await requestTask.ConfigureAwait(false);
             }
 
             var timeoutTask = Task.Delay(timeout);
-            var completedTask = await Task.WhenAny(requestTask, timeoutTask);
+            var completedTask = await Task.WhenAny(requestTask, timeoutTask).ConfigureAwait(false);
             if (completedTask == requestTask)
             {
-                return await requestTask;
+                return await requestTask.ConfigureAwait(false);
             }
 
             try
@@ -1881,9 +1968,14 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         internal async Task<string> ValidateFileServerRepresentativeLocalLoads(
             string codeAssetLocalPath,
-            string assetBundleAssetLocalPath,
+            IReadOnlyList<string> assetBundleAssetLocalPaths,
             string tableAssetLocalPath)
         {
+            var firstAssetBundleLocalPath = assetBundleAssetLocalPaths != null && assetBundleAssetLocalPaths.Count > 0
+                ? assetBundleAssetLocalPaths[0]
+                : string.Empty;
+            var assetBundleCount = assetBundleAssetLocalPaths?.Count ?? 0;
+
             LogFileServerBatchProgress("代表性本地加载", 1, 3, codeAssetLocalPath, Color.cyan, "component=Code");
             var codeLoadError = ValidateFileServerCodeRepresentativeLocalLoad(codeAssetLocalPath);
             if (!string.IsNullOrEmpty(codeLoadError))
@@ -1893,16 +1985,18 @@ namespace BDFramework.ResourceMgr
 
             LogFileServerFlow($"代表性本地加载通过 component=Code target={codeAssetLocalPath}", Color.green);
 
-            LogFileServerBatchProgress("代表性本地加载", 2, 3, assetBundleAssetLocalPath, Color.cyan,
-                "component=AssetBundle");
+            LogFileServerBatchProgress("代表性本地加载", 2, 3, firstAssetBundleLocalPath, Color.cyan,
+                $"component=AssetBundle bundleCount={assetBundleCount}");
             var assetBundleLoadError =
-                await ValidateFileServerAssetBundleRepresentativeLocalLoadOnUnityContext(assetBundleAssetLocalPath);
+                await ValidateFileServerAssetBundleLocalLoadsOnUnityContext(assetBundleAssetLocalPaths);
             if (!string.IsNullOrEmpty(assetBundleLoadError))
             {
                 return assetBundleLoadError;
             }
 
-            LogFileServerFlow($"代表性本地加载通过 component=AssetBundle target={assetBundleAssetLocalPath}", Color.green);
+            LogFileServerFlow(
+                $"代表性本地加载通过 component=AssetBundle count={assetBundleCount} first={firstAssetBundleLocalPath}",
+                Color.green);
 
             LogFileServerBatchProgress("代表性本地加载", 3, 3, tableAssetLocalPath, Color.cyan, "component=Table");
             var tableLoadError = ValidateFileServerTableRepresentativeLocalLoad(tableAssetLocalPath);
@@ -1947,6 +2041,105 @@ namespace BDFramework.ResourceMgr
             {
                 return $"文件服务器热更代码本地加载校验失败 path={codeAssetLocalPath} err={exception.Message}";
             }
+        }
+
+        /// <summary>
+        /// 在 CI batchmode 里把基于 art_assets.info 解析出的所有 AssetBundle 本地打开校验一次性投递到 Unity 同步上下文执行。
+        /// 这样可以确保 bundle 遍历顺序稳定，同时避免后台线程直接触发 UnityEngine 资源 API。
+        /// </summary>
+        internal static async Task<string> ValidateFileServerAssetBundleLocalLoadsOnUnityContext(
+            IReadOnlyList<string> assetBundleAssetLocalPaths)
+        {
+            var firstAssetBundleLocalPath = assetBundleAssetLocalPaths != null && assetBundleAssetLocalPaths.Count > 0
+                ? assetBundleAssetLocalPaths[0]
+                : string.Empty;
+            var assetBundleCount = assetBundleAssetLocalPaths?.Count ?? 0;
+
+            if (PlayerLoopHelper.IsMainThread)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=already-main-thread component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                    Color.cyan);
+                return ValidateFileServerAssetBundleLocalLoads(assetBundleAssetLocalPaths);
+            }
+
+            var unitySynchronizationContext = PlayerLoopHelper.UnitySynchronizationContext;
+            if (unitySynchronizationContext == null)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=missing-sync-context component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                    Color.red);
+                return $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err=UnitySynchronizationContext 为空";
+            }
+
+            LogFileServerFlow(
+                $"mainThreadDispatch status=queued component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                Color.cyan);
+
+            var resultTaskCompletionSource = new TaskCompletionSource<string>();
+            unitySynchronizationContext.Post(_ =>
+            {
+                try
+                {
+                    resultTaskCompletionSource.TrySetResult(
+                        ValidateFileServerAssetBundleLocalLoads(assetBundleAssetLocalPaths));
+                }
+                catch (Exception exception)
+                {
+                    resultTaskCompletionSource.TrySetResult(
+                        $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err={exception.Message}");
+                }
+            }, null);
+
+            var completedTask = await Task.WhenAny(resultTaskCompletionSource.Task, Task.Delay(TimeSpan.FromSeconds(15)));
+            if (completedTask != resultTaskCompletionSource.Task)
+            {
+                LogFileServerFlow(
+                    $"mainThreadDispatch status=timeout component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount} timeoutSeconds=15",
+                    Color.red);
+                return $"文件服务器 AssetBundle 本地加载校验失败 path={firstAssetBundleLocalPath} err=切换 Unity 主线程超时";
+            }
+
+            LogFileServerFlow(
+                $"mainThreadDispatch status=entered component=AssetBundle firstTarget={firstAssetBundleLocalPath} count={assetBundleCount}",
+                Color.cyan);
+            return await resultTaskCompletionSource.Task;
+        }
+
+        /// <summary>
+        /// 按 art_assets.info 中所有非空 AssetBundlePath 去重后的顺序逐个执行本地打开校验。
+        /// 每个 bundle 都沿用单文件校验 helper，从而把错误精确定位到具体的下载文件。
+        /// </summary>
+        internal static string ValidateFileServerAssetBundleLocalLoads(
+            IReadOnlyList<string> assetBundleAssetLocalPaths)
+        {
+            if (assetBundleAssetLocalPaths == null || assetBundleAssetLocalPaths.Count <= 0)
+            {
+                return "文件服务器 AssetBundle 本地加载校验缺少基于 art_assets.info 的资源路径。";
+            }
+
+            var normalizedLocalPaths = assetBundleAssetLocalPaths
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToList();
+            if (normalizedLocalPaths.Count <= 0)
+            {
+                return "文件服务器 AssetBundle 本地加载校验缺少基于 art_assets.info 的资源路径。";
+            }
+
+            for (var index = 0; index < normalizedLocalPaths.Count; index++)
+            {
+                var assetBundleAssetLocalPath = normalizedLocalPaths[index];
+                LogFileServerBatchProgress("AssetBundle逐个本地加载", index + 1, normalizedLocalPaths.Count,
+                    assetBundleAssetLocalPath, Color.cyan, "component=AssetBundle");
+                var loadError = ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
+                if (!string.IsNullOrEmpty(loadError))
+                {
+                    return loadError;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

@@ -100,7 +100,7 @@ def test_run_platform_resource_build_executes_expected_flow(
     monkeypatch: pytest.MonkeyPatch,
     capsys,
 ) -> None:
-    """Verify platform resource builds execute the expected Unity and upload phases."""
+    """验证平台资源构建会按预期执行回滚、本地构建与上传阶段。"""
     events: list[str] = []
     args = SimpleNamespace(
         client_version=" 0.1 ",
@@ -160,6 +160,11 @@ def test_run_platform_resource_build_executes_expected_flow(
 
     monkeypatch.setattr(resource_flow, "run_batchmode", fake_run_batchmode)
     monkeypatch.setattr(resource_flow, "read_log_tail", lambda _log_path: "tail")
+    monkeypatch.setattr(
+        resource_flow,
+        "revert_and_snapshot_changes",
+        lambda **kwargs: events.append("revert_and_snapshot_changes"),
+    )
 
     def fake_upload(platform_key, *, output_root, build_number, fallback_build_label, log_prefix):
         events.append(upload_attr)
@@ -185,20 +190,27 @@ def test_run_platform_resource_build_executes_expected_flow(
     )
 
     output = capsys.readouterr().out
-    assert "ciOutputRoot=/tmp/android/BDFramework.Core/Library/CIOutputs" in output
-    assert "unityBuildTarget=Android" in output
-    assert "baseProjectDir=/tmp/BDFramework.Core" in output
-    assert "projectDir=/tmp/android/BDFramework.Core" in output
-    assert "build finished successfully" in output
-    assert events == [
+    expected_project_dir = project_dir if artifact_kind == "assetbundle" else base_project_dir
+    expected_events = [
         "configure_live_console_output",
         "ensure_platform_allowed:android",
         "resolve_unity_executable",
-        "prepare_platform_ci_project_dir",
+    ]
+    if artifact_kind == "assetbundle":
+        expected_events.append("prepare_platform_ci_project_dir")
+    expected_events.extend([
+        "revert_and_snapshot_changes",
         "build_batchmode_command",
         "run_batchmode",
         upload_attr,
-    ]
+    ])
+
+    assert "ciOutputRoot=/tmp/android/BDFramework.Core/Library/CIOutputs" in output
+    assert "unityBuildTarget=Android" in output
+    assert "baseProjectDir=/tmp/BDFramework.Core" in output
+    assert f"projectDir={expected_project_dir}" in output
+    assert "build finished successfully" in output
+    assert events == expected_events
 
 
 def test_run_platform_resource_build_dry_run_skips_upload(
@@ -313,18 +325,73 @@ def test_prepare_platform_ci_project_dir_reuses_already_isolated_ci_project(
     assert "ciProjectIsolation=already_isolated" in capsys.readouterr().out
 
 
-def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
+def test_prepare_platform_ci_project_dir_reuses_registered_platform_worktree(
     monkeypatch: pytest.MonkeyPatch,
     tmp_path: Path,
     capsys,
 ) -> None:
-    """验证 CI 构建元数据存在时，通过 git worktree 创建平台隔离的项目目录。"""
+    """验证 CI 构建元数据存在且目标 worktree 已注册时，会直接复用该隔离目录。"""
     base_project_dir = tmp_path / "BDFramework.Core"
     base_project_dir.mkdir()
     expected_project_dir = tmp_path / "ios" / "BDFramework.Core"
+    expected_project_dir.mkdir(parents=True)
     recorded_commands: list[tuple[list[str], Path]] = []
 
-    def fake_run(command, *, cwd, check, capture_output, text):
+    def fake_run(command, *, cwd, check, capture_output, text, **_kwargs):
+        recorded_commands.append((command, Path(cwd)))
+        command_args = command[1:]
+        if command_args == ["rev-parse", "--show-toplevel"]:
+            return SimpleNamespace(returncode=0, stdout=str(base_project_dir), stderr="")
+        if command_args == ["worktree", "prune"]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+        if command_args == ["worktree", "list", "--porcelain"]:
+            return SimpleNamespace(
+                returncode=0,
+                stdout=(
+                    f"worktree {base_project_dir}\nHEAD deadbeef\n"
+                    f"worktree {expected_project_dir}\nHEAD cafebabe\n"
+                ),
+                stderr="",
+            )
+
+        raise AssertionError(f"Unexpected git command: {command}")
+
+    monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
+
+    resolved_project_dir = resource_flow.prepare_platform_ci_project_dir(
+        base_project_dir=base_project_dir,
+        platform_key="ios",
+        build_name="BuildAssetbundle_ios",
+        build_number="11",
+        log_prefix="[BuildAssetbundle][iOS]",
+    )
+
+    assert resolved_project_dir == expected_project_dir
+    assert recorded_commands == [
+        (["git", "rev-parse", "--show-toplevel"], base_project_dir),
+        (["git", "worktree", "prune"], base_project_dir),
+        (["git", "worktree", "list", "--porcelain"], base_project_dir),
+    ]
+    output = capsys.readouterr().out
+    assert "ciProjectIsolation=enabled" in output
+    assert f"ciProjectRoot={expected_project_dir}" in output
+    assert "ciProjectAction=use_existing_worktree" in output
+
+
+def test_prepare_platform_ci_project_dir_recreates_unregistered_platform_path(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys,
+) -> None:
+    """验证未注册但残留的目标平台目录会先清理，再重新创建 worktree。"""
+    base_project_dir = tmp_path / "BDFramework.Core"
+    base_project_dir.mkdir()
+    expected_project_dir = tmp_path / "ios" / "BDFramework.Core"
+    expected_project_dir.mkdir(parents=True)
+    recorded_commands: list[tuple[list[str], Path]] = []
+    removed_paths: list[Path] = []
+
+    def fake_run(command, *, cwd, check, capture_output, text, **_kwargs):
         recorded_commands.append((command, Path(cwd)))
         command_args = command[1:]
         if command_args == ["rev-parse", "--show-toplevel"]:
@@ -350,6 +417,11 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
         raise AssertionError(f"Unexpected git command: {command}")
 
     monkeypatch.setattr(resource_flow.subprocess, "run", fake_run)
+    monkeypatch.setattr(
+        resource_flow,
+        "remove_existing_project_dir",
+        lambda path: removed_paths.append(path),
+    )
 
     resolved_project_dir = resource_flow.prepare_platform_ci_project_dir(
         base_project_dir=base_project_dir,
@@ -360,6 +432,7 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
     )
 
     assert resolved_project_dir == expected_project_dir
+    assert removed_paths == [expected_project_dir]
     assert recorded_commands == [
         (["git", "rev-parse", "--show-toplevel"], base_project_dir),
         (["git", "worktree", "prune"], base_project_dir),
@@ -378,8 +451,7 @@ def test_prepare_platform_ci_project_dir_recreates_platform_worktree(
         ),
     ]
     output = capsys.readouterr().out
-    assert "ciProjectIsolation=enabled" in output
-    assert f"ciProjectRoot={expected_project_dir}" in output
+    assert "ciProjectAction=remove_existing_path" in output
     assert "ciProjectAction=create_worktree" in output
 
 

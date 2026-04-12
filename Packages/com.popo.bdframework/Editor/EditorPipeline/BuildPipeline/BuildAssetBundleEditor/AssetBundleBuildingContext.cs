@@ -24,7 +24,10 @@ using Debug = UnityEngine.Debug;
 namespace BDFramework.Editor.BuildPipeline.AssetBundle
 {
     /// <summary>
-    /// Assetbundle构建时候的上下文信息
+    /// AssetBundle 构建上下文。
+    /// 该类型负责把一次构建周期内的资产搜集、SBP 打包、结果校验和版本文件回写收敛到同一个协调器中，避免 TeamCity BatchMode
+    /// 和编辑器手动构建在多个入口之间分散状态。
+    /// 示例：<c>PublishPipeLineCI.BuildAssetbundleIOS()</c> 最终会通过这里执行 iOS 热更 AssetBundle 的完整构建流程。
     /// </summary>
     public class AssetBundleBuildingContext
     {
@@ -77,6 +80,31 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             "BC7",
             "BC7Crunched",
         };
+
+        /// <summary>
+        /// SBP 本地 BuildCache 的最大容量上限，单位 byte。
+        /// </summary>
+        private const long SbpLocalBuildCacheMaxBytes = 200L * 1024L * 1024L * 1024L;
+
+        /// <summary>
+        /// 记录并裁剪当前工程的 SBP 本地 BuildCache，避免 CI 长期累积后挤占磁盘。
+        /// 这里依赖 SBP 官方裁剪接口，不引入额外的自定义缓存目录协议。
+        /// </summary>
+        private static void PruneLocalSbpBuildCache(string reason)
+        {
+            var buildCachePath = IPath.Combine(BApplication.ProjectRoot, "Library", "BuildCache");
+            Debug.Log($"【BuildAssetbundle】SBP本地BuildCache启用 path={buildCachePath} maxSizeGB=200 reason={reason}");
+
+            try
+            {
+                BuildCache.PruneCache_Background(SbpLocalBuildCacheMaxBytes);
+                Debug.Log($"【BuildAssetbundle】SBP本地BuildCache裁剪完成 path={buildCachePath} maxSizeGB=200 reason={reason}");
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【BuildAssetbundle】SBP本地BuildCache裁剪失败 path={buildCachePath} maxSizeGB=200 reason={reason} err={exception.Message}");
+            }
+        }
 
         /// <summary>
         /// 搜集打包资产信息
@@ -656,8 +684,51 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
         }
 
         /// <summary>
+        /// 判断当前 Unity 工程是否已经位于 TeamCity 约定的 <c>/{platform}/{repo-name}</c> 平台隔离目录下。
+        /// 这类目录天然拥有独立的 <c>Library/Temp/SBP</c> 缓存，iOS 重试时无需再额外 purge 全局 BuildCache。
+        /// </summary>
+        /// <param name="projectRoot">当前 Unity 工程根目录。</param>
+        /// <param name="platform">本次构建对应的平台。</param>
+        /// <returns>当工程父目录名与平台资源目录一致时返回 true。</returns>
+        internal static bool IsProjectRootPlatformIsolated(string projectRoot, RuntimePlatform platform)
+        {
+            if (string.IsNullOrEmpty(projectRoot))
+            {
+                return false;
+            }
+
+            var platformDirectoryName = BApplication.GetPlatformLoadPath(platform);
+            if (string.IsNullOrEmpty(platformDirectoryName))
+            {
+                return false;
+            }
+
+            var projectDirectory = new DirectoryInfo(projectRoot);
+            var parentDirectory = projectDirectory.Parent;
+            if (parentDirectory == null)
+            {
+                return false;
+            }
+
+            return string.Equals(parentDirectory.Name, platformDirectoryName, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// 决定 iOS BatchMode 首次失败后的兜底是否需要继续 purge SBP BuildCache。
+        /// 只有当前工程仍是共享根目录时才保留这一步；已经切到平台隔离目录时直接跳过，避免把同平台可复用缓存也清掉。
+        /// </summary>
+        /// <param name="projectRoot">当前 Unity 工程根目录。</param>
+        /// <param name="platform">本次构建对应的平台。</param>
+        /// <returns>当当前工程仍可能复用跨平台缓存时返回 true。</returns>
+        internal static bool ShouldPurgeBuildCacheForIOSBatchModeRetry(string projectRoot, RuntimePlatform platform)
+        {
+            return !IsProjectRootPlatformIsolated(projectRoot, platform);
+        }
+
+        /// <summary>
         /// iOS BatchMode 在 agent 复用 Library 时会偶发沿用旧平台纹理导入结果。
-        /// SBP 首次失败后，做一次纹理重导入和临时目录清理，再重试一次即可自愈该类问题。
+        /// SBP 首次失败后，做一次纹理重导入和临时目录清理；只有当前工程仍是共享根目录时才额外 purge BuildCache，
+        /// 已经运行在平台隔离工程时直接重试，避免把同平台缓存也一起清掉。
         /// </summary>
         private ReturnCode RetryIOSBatchModeBuildIfNeeded(
             RuntimePlatform platform,
@@ -677,7 +748,19 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             Debug.LogWarning($"【BuildAssetbundle】iOS BatchMode首次SBP失败，准备修复纹理导入缓存并重试。retCode:{retCode}");
             RepairIOSBatchModeTextureImports(buildAssetInfos);
             CleanupSBPTemporaryBuildData();
-            BuildCache.PurgeCache(false);
+
+            // Phase 1: 只有共享工程根目录才继续 purge BuildCache；平台隔离目录已经天然隔离了跨平台 SBP 缓存。
+            if (ShouldPurgeBuildCacheForIOSBatchModeRetry(BApplication.ProjectRoot, platform))
+            {
+                Debug.LogWarning($"【BuildAssetbundle】当前工程不是平台隔离目录，执行SBP BuildCache清理。projectRoot:{BApplication.ProjectRoot}");
+                BuildCache.PurgeCache(false);
+            }
+            else
+            {
+                Debug.LogWarning($"【BuildAssetbundle】当前工程已经位于平台隔离目录，跳过SBP BuildCache清理。projectRoot:{BApplication.ProjectRoot}");
+            }
+
+            // Phase 2: 刷新当前工程资源数据库，再以相同 buildContent 重试一次 SBP 打包。
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
 
             var retryRetCode = ContentPipeline.BuildAssetBundles(buildParams, buildContent, out results);
@@ -705,29 +788,31 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
 
             var buildParams = new BundleBuildParameters(BApplication.GetBuildTarget(platform),
                 BApplication.GetBuildTargetGroup(platform), abOutputPath);
+            // Phase 1: 显式裁剪本地 SBP BuildCache，保证 CI 长跑时缓存容量被限制在 200GB 内。
+            PruneLocalSbpBuildCache("before-build");
+
             //使用CacheServer，Editor下 CacheServer(specific)
-            var address = EditorSettings.cacheServerEndpoint.Split(':');
-            var ip = address[0];
+            var buildCachePath = IPath.Combine(BApplication.ProjectRoot, "Library", "BuildCache");
+            var cacheServerEndpoint = EditorSettings.cacheServerEndpoint ?? string.Empty;
+            var address = cacheServerEndpoint.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            var ip = address.Length > 0 ? address[0] : string.Empty;
             UInt16 port = 0; // If 0, will use the default set port
             if (address.Length == 2)
             {
-                port = Convert.ToUInt16(address[1]);
+                UInt16.TryParse(address[1], out port);
             }
 
-            bool iscanConnectCacheServer = AssetDatabase.CanConnectToCacheServer(ip, port);
+            bool iscanConnectCacheServer = !string.IsNullOrEmpty(ip) && AssetDatabase.CanConnectToCacheServer(ip, port);
             //SBP
             if (!iscanConnectCacheServer)
             {
-                // for (int i = 0; i < 10; i++)
-                // {
-                //     Debug.LogError(
-                //         "建议配置 CacheServer,避免相同资产打包Assetbundle不一致!! (Project Setting/Editor/CacheServer(project specific))");
-                // }
+                Debug.LogWarning($"【BuildAssetbundle】SBP CacheServer未连接，继续使用本地BuildCache。endpoint={cacheServerEndpoint} localBuildCachePath={buildCachePath}");
             }
             else
             {
                 buildParams.CacheServerHost = ip;
                 buildParams.CacheServerPort = port;
+                Debug.Log($"【BuildAssetbundle】SBP CacheServer已连接 host={ip} port={(port == 0 ? 8126 : port)} localBuildCachePath={buildCachePath}");
             }
             //LZ4压缩
             buildParams.BundleCompression = BuildCompression.LZ4;
@@ -738,6 +823,8 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             ReturnCode retCode = ContentPipeline.BuildAssetBundles(buildParams, buildContent, out results);
             retCode = RetryIOSBatchModeBuildIfNeeded(platform, retCode, buildAssetInfos, buildParams, buildContent,
                 out results);
+            // Phase 2: 构建完成后再次裁剪，避免本次打包新增缓存后突破 200GB 容量上限。
+            PruneLocalSbpBuildCache("after-build");
 
 
             switch (retCode)

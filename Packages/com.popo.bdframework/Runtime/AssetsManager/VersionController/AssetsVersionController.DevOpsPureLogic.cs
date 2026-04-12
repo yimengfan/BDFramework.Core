@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BDFramework.Asset;
+using BDFramework.ResourceMgr.V2;
 using UnityEngine;
 
 namespace BDFramework.ResourceMgr
@@ -407,6 +408,34 @@ namespace BDFramework.ResourceMgr
                 default:
                     return candidates.FirstOrDefault(item => item != null);
             }
+        }
+
+        /// <summary>
+        /// 从 <c>art_assets.info</c> 的解析结果里提取需要做本地打开校验的 AssetBundle 相对路径。
+        /// 这里按非空 <c>AssetBundlePath</c> 去重，避免同一个 bundle 因多个资源记录被重复 <c>LoadFromFile</c>。
+        /// </summary>
+        internal static List<string> CollectFileServerAssetBundleValidationRelativePaths(
+            IEnumerable<AssetBundleItem> assetBundleItems)
+        {
+            var validationRelativePaths = new List<string>();
+            var seenRelativePaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var assetBundleItem in assetBundleItems ?? Enumerable.Empty<AssetBundleItem>())
+            {
+                if (assetBundleItem == null || string.IsNullOrWhiteSpace(assetBundleItem.AssetBundlePath))
+                {
+                    continue;
+                }
+
+                var relativePath = (ArtAssetRootPath + "/" + assetBundleItem.AssetBundlePath.Trim())
+                    .Replace("\\", "/");
+                if (seenRelativePaths.Add(relativePath))
+                {
+                    validationRelativePaths.Add(relativePath);
+                }
+            }
+
+            return validationRelativePaths;
         }
 
         /// <summary>

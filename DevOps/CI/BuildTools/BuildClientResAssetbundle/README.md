@@ -68,11 +68,11 @@ python -m pytest DevOps/CI/BuildTools/tests/test_client_resource_artifacts.py De
 
 - `assets.info`
 - `assets_subpack.info`（如果本次 Unity 输出里存在）
-- `assets.info` 中声明的 `HashName` 文件，包括 `package_build.info`、`art_assets/*` 等对应的服务器 hash payload
+- `assets.info` 中声明的 `HashName` 文件，仅包含运行时需要的 `art_assets/*` 等服务器 hash payload
 
 整理完成后还会执行两层校验：
 
-- 本地 staging 语义校验：优先以顶层 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；如果它没有带出真实 `art_assets/*` payload，则回退读取 `art_assets/art_assets.info` 补齐并重写 staging 的 `assets.info`；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `art_assets/*` payload
+- 本地 staging 语义校验：优先以顶层 `assets.info` 作为资源清单，把 `LocalPath -> HashName` 整理成服务器布局；如果它没有带出真实 `art_assets/*` payload，则回退读取 `art_assets/art_assets.info` 补齐并重写 staging 的 `assets.info`；`assets_subpack.info` 仅原样上传，不参与资源存在性判断；同时统一过滤 `package_build.info`、`art_assets/buildlogtep.json`、`art_assets/EditorBuild.Info`、`build_result.info` 等 editor-only / build-only 元数据；hash 文件集合必须与 `assets.info` 一致，且声明中必须存在真实 `art_assets/*` payload
 - 远端上传结果校验：递归拉取文件服务器目录，校验整批文件路径和大小都与本地 staging 一致
 
 ## 示例

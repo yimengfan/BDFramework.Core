@@ -149,12 +149,10 @@ def prepare_platform_ci_project_dir(
         run_git_command(repo_dir=repo_root, args=["worktree", "list", "--porcelain"])
     )
     if isolated_project_dir in registered_worktrees:
-        print(f"{log_prefix} ciProjectAction=remove_existing_worktree")
-        run_git_command(
-            repo_dir=repo_root,
-            args=["worktree", "remove", "--force", str(isolated_project_dir)],
-        )
-    elif isolated_project_dir.exists():
+        print(f"{log_prefix} ciProjectAction=use_existing_worktree")
+        return isolated_project_dir
+
+    if isolated_project_dir.exists():
         print(f"{log_prefix} ciProjectAction=remove_existing_path")
         remove_existing_project_dir(isolated_project_dir)
 

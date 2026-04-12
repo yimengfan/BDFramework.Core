@@ -4,7 +4,7 @@
 1. 这里只处理隔离输出目录、产物筛选、临时整理与上传，不承载 Unity BatchMode 进程编排。
 2. TeamCity DSL 与各构建入口脚本只负责调度参数，真正的产物组织、远端目录协议和上传摘要统一收敛在这里。
 3. Code / Assetbundle / Table 上传成功后，这里还负责刷新共享的 `global_version.info`，让运行时只通过一个文件服务器入口就能拿到各平台的 version_num。
-4. 文件服务器协议要求组件根目录显式保留 `package_build.info`，同时保留 `assets.info` 驱动的 hash payload 布局，避免 VerifyClientRes 与运行时组件上下文读取出现协议分叉。
+4. Code / Table 组件仍显式保留 `package_build.info`；Assetbundle 组件只保留运行时真正需要的 `assets.info` 与 hash payload，避免把母包元数据和 editor-only 构建日志上传到文件服务器。
 """
 
 from __future__ import annotations
@@ -40,10 +40,18 @@ ASSETS_INFO_FILENAME = "assets.info"
 ASSETS_SUBPACK_INFO_FILENAME = "assets_subpack.info"
 SCRIPT_DIRNAME = "script"
 ART_ASSETS_DIRNAME = "art_assets"
-ART_ASSET_METADATA_FILENAMES = {"art_asset_type.info", "art_assets.info", "buildlogtep.json"}
+ART_ASSET_EDITOR_BUILD_INFO_FILENAME = "EditorBuild.Info"
+ART_ASSET_METADATA_FILENAMES = {"art_asset_type.info", "art_assets.info", "buildlogtep.json", ART_ASSET_EDITOR_BUILD_INFO_FILENAME}
 ART_ASSET_TYPE_INFO_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/art_asset_type.info"
 ART_ASSETS_INFO_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/art_assets.info"
 ART_ASSET_BUILD_LOG_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/buildlogtep.json"
+ART_ASSET_EDITOR_BUILD_INFO_LOCAL_PATH = f"{ART_ASSETS_DIRNAME}/{ART_ASSET_EDITOR_BUILD_INFO_FILENAME}"
+ASSETBUNDLE_EXCLUDED_LOCAL_PATHS = {
+    PACKAGE_BUILD_INFO_FILENAME,
+    ART_ASSET_BUILD_LOG_LOCAL_PATH,
+    ART_ASSET_EDITOR_BUILD_INFO_LOCAL_PATH,
+    "build_result.info",
+}
 SCRIPT_METADATA_FILENAMES = set()
 LOCAL_DB_FILENAME = "local.db"
 CLIENT_DB_FILENAME = "client.db"
@@ -733,6 +741,19 @@ def resolve_assetbundle_asset_info_entries(platform_dir: Path, asset_entries: li
     )
 
 
+def filter_assetbundle_upload_entries(asset_entries: list[AssetInfoEntry]) -> list[AssetInfoEntry]:
+    """过滤 Assetbundle staging 不应上传的构建期元数据条目。
+
+    这里统一剔除母包 `package_build.info`、SBP 构建日志和 Editor 专用信息，
+    避免这些文件继续出现在远端 `assets.info` 和 hash payload 布局里。
+    """
+    return [
+        asset_entry
+        for asset_entry in asset_entries
+        if asset_entry.local_path not in ASSETBUNDLE_EXCLUDED_LOCAL_PATHS
+    ]
+
+
 def copy_manifest_hash_files(
     platform_dir: Path,
     prepared_dir: Path,
@@ -885,8 +906,8 @@ def prepare_assetbundle_upload_source(
 ) -> Path:
     """整理热更 Assetbundle 需要上传的目录结构。
 
-    与 Code 一样，Assetbundle 组件根目录需要显式保留 `package_build.info`，同时保留 `assets.info`
-    驱动的 hash payload 文件，避免 VerifyClientRes 读取组件元数据时出现 404。
+    Assetbundle 组件不再上传 `package_build.info`、`buildlogtep.json`、`EditorBuild.Info` 等构建期元数据，
+    只保留运行时真正需要的 `assets.info`、`art_assets.info` 和 hash payload 文件。
     """
     platform_dir = ensure_existing_path(
         output_root / platform_key,
@@ -904,9 +925,9 @@ def prepare_assetbundle_upload_source(
             parse_asset_info_entries(assets_info_path),
         ),
     )
+    asset_entries = filter_assetbundle_upload_entries(asset_entries)
 
     write_asset_info_entries(prepared_dir / ASSETS_INFO_FILENAME, asset_entries)
-    preserve_package_build_info(platform_dir, prepared_dir, source_description="ClientRes assetbundle")
 
     optional_subpack = platform_dir / ASSETS_SUBPACK_INFO_FILENAME
     if optional_subpack.exists():

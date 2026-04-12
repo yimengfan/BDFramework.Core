@@ -25,7 +25,7 @@
 ## 测试目标与范围
 
 - 测试目标：验证 TeamCity 在拿到 Code / AssetBundle / Table 三段构建号后，Unity 端会读取远端 `version.info`、执行真实下载，并确认三类代表性资源能够在本地真实打开。
-- 测试范围：`--expected-*` 版本号透传、文件服务器地址解析、远端 `clientRes_{platform}/version.info` 校验、本地 persistent 重置、真实下载、`package_build.info` 回写校验、Code 代表性程序集装载、AssetBundle 代表性 bundle 本地打开、Table 代表性 SQLite 只读打开。
+- 测试范围：`--expected-*` 版本号透传、文件服务器地址解析、远端 `clientRes_{platform}/version.info` 校验、本地 persistent 重置、真实下载、本地 `package_build.info` 三段版本回写校验、Code 代表性程序集装载、AssetBundle 按 `art_assets.info` 去重遍历后的 bundle 本地打开、Table 代表性 SQLite 只读打开。
 
 ## TeamCity 描述
 
