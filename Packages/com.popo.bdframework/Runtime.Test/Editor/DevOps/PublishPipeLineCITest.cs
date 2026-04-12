@@ -1,7 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
-using BDFramework.Editor.DevOps;
+using BDFramework.Editor.Environment;
+using BDFramework.ResourceMgr;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -9,8 +10,8 @@ using UnityEngine;
 namespace BDFramework.EditorTest.DevOps
 {
     /// <summary>
-    /// 对应 PublishPipeLineCI.cs 的纯参数装配测试。
-    /// 这些断言只覆盖 BatchMode 文件服务器验证请求的构造与参数校验，不依赖真实 Unity 下载或 TeamCity 环境。
+    /// 对应文件服务器 BatchMode 验证请求 owner 的纯参数装配测试。
+    /// 这些断言只覆盖 AssetsVersionController 文件服务器验证请求的构造与参数校验，不依赖真实 Unity 下载或 TeamCity 环境。
     /// </summary>
     public class PublishPipeLineCITest
     {
@@ -22,7 +23,7 @@ namespace BDFramework.EditorTest.DevOps
         public void SetUp()
         {
             LogTestPurposeAndMeans(TestContext.CurrentContext.Test.Name,
-                $"验证 {TestContext.CurrentContext.Test.Name} 对应的 PublishPipeLineCI 参数装配与错误契约。",
+                $"验证 {TestContext.CurrentContext.Test.Name} 对应的文件服务器 BatchMode 参数装配与错误契约。",
                 "执行显式参数装配断言，并校验构造结果与异常参数名。");
         }
 
@@ -42,7 +43,7 @@ namespace BDFramework.EditorTest.DevOps
         {
             // Phase 1: 顺序执行这组纯参数断言，并把每个结果写入统一报告。
             LogTestPurposeAndMeans(nameof(PublishPipeLineCITest),
-                "验证 PublishPipeLineCI BatchMode 参数装配相关断言在 batchmode 下可稳定执行。",
+                "验证文件服务器 BatchMode 参数装配相关断言在 batchmode 下可稳定执行。",
                 "顺序执行参数装配与错误分支断言、写出批验证报告，并用显式退出码反馈结果。");
             Debug.Log("[测试进度] suite=PublishPipeLineCITest stage=start");
             var reportBuilder = new StringBuilder();
@@ -56,6 +57,16 @@ namespace BDFramework.EditorTest.DevOps
                     testInstance.CreateFileServerBatchVerificationRequest_RejectsMissingServerUrl),
                 (nameof(CreateFileServerBatchVerificationRequest_RejectsMissingComponentVersion),
                     testInstance.CreateFileServerBatchVerificationRequest_RejectsMissingComponentVersion),
+                (nameof(BatchModeCommandLine_GetArg_ReturnsValueForCaseInsensitiveArgName),
+                    testInstance.BatchModeCommandLine_GetArg_ReturnsValueForCaseInsensitiveArgName),
+                (nameof(BatchModeCommandLine_GetArg_ReturnsNullWhenValueMissingOrArgAbsent),
+                    testInstance.BatchModeCommandLine_GetArg_ReturnsNullWhenValueMissingOrArgAbsent),
+                (nameof(AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
+                    testInstance.AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout),
+                (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
+                    testInstance.AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout),
+                (nameof(AndroidExternalToolsBatchResolver_IsValidAndroidNdkPath_RecognizesExpectedLayout),
+                    testInstance.AndroidExternalToolsBatchResolver_IsValidAndroidNdkPath_RecognizesExpectedLayout),
             };
 
             for (var index = 0; index < checks.Length; index++)
@@ -68,7 +79,7 @@ namespace BDFramework.EditorTest.DevOps
             var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "Library",
                 "PublishPipeLineCIBatchVerification.txt");
             reportBuilder.Insert(0,
-                $"Summary: total=3 passed={3 - failedCount} failed={failedCount}{Environment.NewLine}");
+                $"Summary: total={checks.Length} passed={checks.Length - failedCount} failed={failedCount}{Environment.NewLine}");
             File.WriteAllText(outputPath, reportBuilder.ToString(), Encoding.UTF8);
 
             // Phase 3: 用显式退出码把 batchmode 结果反馈给宿主 CI。
@@ -89,7 +100,7 @@ namespace BDFramework.EditorTest.DevOps
         [Test]
         public void CreateFileServerBatchVerificationRequest_BuildsExpectedRequest()
         {
-            var request = PublishPipeLineCI.CreateFileServerBatchVerificationRequest(
+            var request = AssetsVersionController.CreateFileServerBatchVerificationRequest(
                 " http://127.0.0.1:20001/ ",
                 " 101 ",
                 " 202 ",
@@ -110,7 +121,7 @@ namespace BDFramework.EditorTest.DevOps
         public void CreateFileServerBatchVerificationRequest_RejectsMissingServerUrl()
         {
             var exception = Assert.Throws<ArgumentException>(() =>
-                PublishPipeLineCI.CreateFileServerBatchVerificationRequest(
+                AssetsVersionController.CreateFileServerBatchVerificationRequest(
                     string.Empty,
                     "101",
                     "202",
@@ -126,13 +137,122 @@ namespace BDFramework.EditorTest.DevOps
         public void CreateFileServerBatchVerificationRequest_RejectsMissingComponentVersion()
         {
             var exception = Assert.Throws<ArgumentException>(() =>
-                PublishPipeLineCI.CreateFileServerBatchVerificationRequest(
+                AssetsVersionController.CreateFileServerBatchVerificationRequest(
                     "http://127.0.0.1:20001",
                     "101",
                     " ",
                     "303"));
 
             Assert.That(exception?.ParamName, Is.EqualTo("-expectedAssetbundleVersion"));
+        }
+
+        /// <summary>
+        /// 验证 BatchMode 命令行工具会忽略参数名大小写，并返回紧随其后的参数值。
+        /// 这样 TeamCity 或本地脚本在参数大小写不完全一致时，owner 仍能稳定拿到统一值。
+        /// </summary>
+        [Test]
+        public void BatchModeCommandLine_GetArg_ReturnsValueForCaseInsensitiveArgName()
+        {
+            var args = new[]
+            {
+                "-clientVersion",
+                "1.2.3",
+                "-ciOutputRoot",
+                "/tmp/output"
+            };
+
+            var value = BatchModeCommandLine.GetArg(args, "-CIOUTPUTROOT");
+
+            Assert.That(value, Is.EqualTo("/tmp/output"));
+        }
+
+        /// <summary>
+        /// 验证当参数不存在、值缺失或输入列表为空时，BatchMode 命令行工具会显式返回空值。
+        /// 这样上层 owner 可以用统一的 fallback 规则处理，而不是误读越界参数。
+        /// </summary>
+        [Test]
+        public void BatchModeCommandLine_GetArg_ReturnsNullWhenValueMissingOrArgAbsent()
+        {
+            Assert.That(BatchModeCommandLine.GetArg((string[])null, "-ciOutputRoot"), Is.Null);
+            Assert.That(BatchModeCommandLine.GetArg(new[] { "-ciOutputRoot" }, "-ciOutputRoot"), Is.Null);
+            Assert.That(BatchModeCommandLine.GetArg(new[] { "-clientVersion", "1.2.3" }, "-ciOutputRoot"), Is.Null);
+        }
+
+        /// <summary>
+        /// 验证 Android JDK 路径探测只要命中约定的 javac 布局，就会被识别成可用目录。
+        /// 这覆盖了本次从 CI wrapper 下沉出的纯文件系统判断逻辑。
+        /// </summary>
+        [Test]
+        public void AndroidExternalToolsBatchResolver_IsValidJdkPath_RecognizesExpectedLayout()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var jdkRoot = Path.Combine(tempRoot, "jdk");
+                Directory.CreateDirectory(Path.Combine(jdkRoot, "bin"));
+#if UNITY_EDITOR_WIN
+                File.WriteAllText(Path.Combine(jdkRoot, "bin", "javac.exe"), string.Empty);
+#else
+                File.WriteAllText(Path.Combine(jdkRoot, "bin", "javac"), string.Empty);
+#endif
+
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidJdkPath(jdkRoot), Is.True);
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidJdkPath(Path.Combine(tempRoot, "missing-jdk")), Is.False);
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 Android SDK 路径探测会识别标准的 platform-tools/adb 布局。
+        /// 这样无论路径来自环境变量还是自动探测，基础设施层都能一致地判定是否可用。
+        /// </summary>
+        [Test]
+        public void AndroidExternalToolsBatchResolver_IsValidAndroidSdkPath_RecognizesExpectedLayout()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var sdkRoot = Path.Combine(tempRoot, "sdk");
+                Directory.CreateDirectory(Path.Combine(sdkRoot, "platform-tools"));
+#if UNITY_EDITOR_WIN
+                File.WriteAllText(Path.Combine(sdkRoot, "platform-tools", "adb.exe"), string.Empty);
+#else
+                File.WriteAllText(Path.Combine(sdkRoot, "platform-tools", "adb"), string.Empty);
+#endif
+
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidAndroidSdkPath(sdkRoot), Is.True);
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidAndroidSdkPath(Path.Combine(tempRoot, "missing-sdk")), Is.False);
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
+        }
+
+        /// <summary>
+        /// 验证 Android NDK 路径探测会识别 source.properties 与 toolchains 组合布局。
+        /// 这样 CI 在没有直接命中 ndk-build 可执行文件时，仍能通过目录结构判断合法性。
+        /// </summary>
+        [Test]
+        public void AndroidExternalToolsBatchResolver_IsValidAndroidNdkPath_RecognizesExpectedLayout()
+        {
+            var tempRoot = CreateTempDirectory();
+            try
+            {
+                var ndkRoot = Path.Combine(tempRoot, "ndk");
+                Directory.CreateDirectory(Path.Combine(ndkRoot, "toolchains"));
+                File.WriteAllText(Path.Combine(ndkRoot, "source.properties"), "Pkg.Revision = 23.1.7779620");
+
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidAndroidNdkPath(ndkRoot), Is.True);
+                Assert.That(AndroidExternalToolsBatchResolver.IsValidAndroidNdkPath(Path.Combine(tempRoot, "missing-ndk")), Is.False);
+            }
+            finally
+            {
+                DeleteDirectoryIfExists(tempRoot);
+            }
         }
 
         /// <summary>
@@ -146,7 +266,7 @@ namespace BDFramework.EditorTest.DevOps
             ref int failedCount)
         {
             LogTestPurposeAndMeans(testName,
-                $"验证 {testName} 对应的 PublishPipeLineCI 参数装配与错误契约。",
+                $"验证 {testName} 对应的文件服务器 BatchMode 参数装配与错误契约。",
                 "执行纯参数装配断言，并校验请求字段或异常参数名。");
             Debug.Log($"[测试进度] suite=PublishPipeLineCITest current={currentIndex}/{totalCount} name={testName}");
             try
@@ -163,6 +283,28 @@ namespace BDFramework.EditorTest.DevOps
                 reportBuilder.AppendLine(exception.ToString());
                 Debug.LogError(
                     $"[测试进度] suite=PublishPipeLineCITest current={currentIndex}/{totalCount} name={testName} status=failed err={exception.Message}");
+            }
+        }
+
+        /// <summary>
+        /// 为纯文件系统测试创建独占临时目录，避免不同测试共享目录造成串扰。
+        /// </summary>
+        private static string CreateTempDirectory()
+        {
+            var tempDirectory = Path.Combine(Path.GetTempPath(), "BDFramework-PublishPipeLineCITest",
+                Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(tempDirectory);
+            return tempDirectory;
+        }
+
+        /// <summary>
+        /// 清理测试使用的临时目录，避免本地和 CI 机器留下无用目录。
+        /// </summary>
+        private static void DeleteDirectoryIfExists(string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                Directory.Delete(directoryPath, true);
             }
         }
     }

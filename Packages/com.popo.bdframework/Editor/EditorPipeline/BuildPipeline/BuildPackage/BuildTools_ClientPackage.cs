@@ -25,6 +25,7 @@ namespace BDFramework.Editor.BuildPipeline
     static public class BuildTools_ClientPackage
     {
         public const string DefaultClientVersion = "0.1.0";
+        internal const string ClientVersionBatchArgName = "-clientVersion";
         const string IOSPostBuildShellRelativePath = "DevOps/CI/BuildTools/BuildClientPackage/build_xcode.shell";
 
         public enum BuildMode
@@ -215,6 +216,49 @@ namespace BDFramework.Editor.BuildPipeline
             }
 
             return DefaultClientVersion;
+        }
+
+        /// <summary>
+        /// 解析本次 BatchMode 母包构建应使用的 clientVersion。
+        /// 如果命令行没有显式传入，就回退到 BuildTools_ClientPackage 的默认版本号规则。
+        /// </summary>
+        public static string GetClientVersionForBatchMode()
+        {
+            var clientVersion = BatchModeCommandLine.GetArg(ClientVersionBatchArgName);
+            if (!string.IsNullOrWhiteSpace(clientVersion))
+            {
+                return clientVersion.Trim();
+            }
+
+            return GetDefaultClientVersion();
+        }
+
+        /// <summary>
+        /// 执行母包 BatchMode 构建入口。
+        /// 这里负责收敛版本号解析、Android External Tools 补齐和失败契约，真正的打包仍复用现有 Build 主流程。
+        /// </summary>
+        public static void BuildClientPackageForBatchMode(BuildTarget buildTarget, BuildMode buildMode)
+        {
+            var clientVersion = GetClientVersionForBatchMode();
+            Debug.Log($"【CI】BuildTarget:{buildTarget} BuildMode:{buildMode} ClientVersion:{clientVersion}");
+
+            if (buildTarget == BuildTarget.Android)
+            {
+                AndroidExternalToolsBatchResolver.EnsureAndroidExternalToolsForBatchMode();
+            }
+
+            var ret = Build(
+                buildMode,
+                true,
+                BApplication.DevOpsPublishClientPackagePath,
+                buildTarget,
+                BuildTools_Assets.BuildPackageOption.BuildAll,
+                clientVersion);
+
+            if (!ret)
+            {
+                throw new Exception($"【CI】构建母包失败! Target:{buildTarget} Mode:{buildMode} ClientVersion:{clientVersion}");
+            }
         }
 
         static string NormalizeClientVersion(string clientVersion)

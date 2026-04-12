@@ -5,11 +5,13 @@ using BDFramework.Assets.VersionContrller;
 using BDFramework.Core.Tools;
 using BDFramework.Editor.AssetBundle;
 using BDFramework.Editor.BuildPipeline.AssetBundle;
+using BDFramework.Editor.Environment;
 using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.PublishPipeline;
 using BDFramework.Editor.Table;
 using BDFramework.ResourceMgr;
 using ServiceStack.Text;
+using UnityEditor;
 using UnityEngine;
 
 namespace BDFramework.Editor.BuildPipeline
@@ -19,6 +21,8 @@ namespace BDFramework.Editor.BuildPipeline
     /// </summary>
     static public class BuildTools_Assets
     {
+        internal const string CIOutputRootBatchArgName = "-ciOutputRoot";
+
         /// <summary>
         /// 构建包体操作
         /// </summary>
@@ -43,6 +47,47 @@ namespace BDFramework.Editor.BuildPipeline
             BuildArtAssets = 1 << 3,
             
             BuildAll = BuildHotfixCode | BuildSqlite | BuildArtAssets ,
+        }
+
+        /// <summary>
+        /// 解析本次 CI 构建的产物根目录。
+        /// 优先读取命令行里的 <c>-ciOutputRoot</c>，否则回退到框架默认的发布目录。
+        /// </summary>
+        static internal string GetCIOutputRootForBatchMode(string defaultOutputRoot)
+        {
+            var outputRoot = BatchModeCommandLine.GetArg(CIOutputRootBatchArgName);
+            if (!string.IsNullOrWhiteSpace(outputRoot))
+            {
+                var resolvedOutputRoot = Path.GetFullPath(outputRoot.Trim());
+                Directory.CreateDirectory(resolvedOutputRoot);
+                return resolvedOutputRoot;
+            }
+
+            Directory.CreateDirectory(defaultOutputRoot);
+            return defaultOutputRoot;
+        }
+
+        /// <summary>
+        /// 执行 ClientRes BatchMode 构建入口。
+        /// 这里负责收敛版本号、输出目录、目标平台和 Android External Tools，真正的构建仍复用 BuildAll。
+        /// </summary>
+        static public void BuildClientResForBatchMode(BuildTarget buildTarget, BuildPackageOption buildOption)
+        {
+            var clientVersion = BuildTools_ClientPackage.GetClientVersionForBatchMode();
+            var outputRoot = GetCIOutputRootForBatchMode(BApplication.DevOpsPublishAssetsPath);
+            var platform = BApplication.GetRuntimePlatform(buildTarget);
+            Debug.Log($"【CI】BuildClientRes Target:{buildTarget} Platform:{platform} Option:{buildOption} ClientVersion:{clientVersion} OutputRoot:{outputRoot}");
+
+            if (buildTarget == BuildTarget.Android)
+            {
+                AndroidExternalToolsBatchResolver.EnsureAndroidExternalToolsForBatchMode();
+            }
+
+            BuildAll(
+                platform,
+                outputRoot,
+                setNewVersionNum: clientVersion,
+                opa: buildOption);
         }
 
         /// <summary>

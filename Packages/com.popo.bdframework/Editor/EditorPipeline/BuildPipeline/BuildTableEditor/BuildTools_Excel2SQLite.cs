@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using BDFramework.Asset;
 using BDFramework.Core.Tools;
+using BDFramework.Editor.BuildPipeline;
 using BDFramework.Editor.Environment;
 using LitJson;
 using BDFramework.Sql;
@@ -41,6 +42,29 @@ namespace BDFramework.Editor.Table
             BuildSqlite(BApplication.streamingAssetsPath, BApplication.RuntimePlatform, DBType.Server);
             AssetDatabase.Refresh();
             Debug.Log("表格导出完毕");
+        }
+
+        /// <summary>
+        /// 执行统一表格 BatchMode 构建入口。
+        /// 产物会写到 CI 输出根目录，供后续上传脚本发布为共享 Table 制品。
+        /// </summary>
+        public static void BuildTableForBatchMode()
+        {
+            var outputRoot = BuildTools_Assets.GetCIOutputRootForBatchMode(BApplication.DevOpsPublishAssetsPath);
+            var platform = BApplication.RuntimePlatform;
+            Debug.Log($"【CI】BuildTable Platform:{platform} OutputRoot:{outputRoot}");
+
+            var buildClientDb = BuildSqlite(outputRoot, platform, DBType.Local);
+            if (!buildClientDb)
+            {
+                throw new Exception($"【CI】构建 client.db 失败! Platform:{platform} OutputRoot:{outputRoot}");
+            }
+
+            var buildServerDb = BuildSqlite(outputRoot, platform, DBType.Server);
+            if (!buildServerDb)
+            {
+                throw new Exception($"【CI】构建 server.db 失败! Platform:{platform} OutputRoot:{outputRoot}");
+            }
         }
 
 

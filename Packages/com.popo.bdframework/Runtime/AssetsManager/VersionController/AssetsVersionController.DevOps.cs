@@ -192,6 +192,123 @@ namespace BDFramework.ResourceMgr
         }
 
         /// <summary>
+        /// 文件服务器 BatchMode 验证使用的 serverUrl 参数名。
+        /// 该常量由 Unity BatchMode 与 TeamCity Python 脚本共同约定，避免参数文本散落在 wrapper 和运行时 owner 两处。
+        /// </summary>
+        internal const string FileServerUrlBatchArgName = "-fileServerUrl";
+
+        /// <summary>
+        /// 文件服务器 BatchMode 验证使用的代码版本参数名。
+        /// </summary>
+        internal const string ExpectedCodeVersionBatchArgName = "-expectedCodeVersion";
+
+        /// <summary>
+        /// 文件服务器 BatchMode 验证使用的 AssetBundle 版本参数名。
+        /// </summary>
+        internal const string ExpectedAssetbundleVersionBatchArgName = "-expectedAssetbundleVersion";
+
+        /// <summary>
+        /// 文件服务器 BatchMode 验证使用的表格版本参数名。
+        /// </summary>
+        internal const string ExpectedTableVersionBatchArgName = "-expectedTableVersion";
+
+        /// <summary>
+        /// 读取当前 Unity 进程命令行中的指定参数值。
+        /// 该 helper 只服务于文件服务器验证 owner，自身不承担其他构建域的参数解析职责。
+        /// </summary>
+        private static string GetBatchModeCommandLineArg(string argName)
+        {
+            var args = Environment.GetCommandLineArgs();
+            for (var index = 0; index < args.Length - 1; index++)
+            {
+                if (string.Equals(args[index], argName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return args[index + 1];
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 规范化文件服务器 BatchMode 必填参数值。
+        /// 这样 TeamCity 漏传参数时会在验证 owner 入口得到明确错误，而不是把空值带入后续下载流程。
+        /// </summary>
+        internal static string NormalizeRequiredBatchModeArg(string rawValue, string argName)
+        {
+            if (!string.IsNullOrWhiteSpace(rawValue))
+            {
+                return rawValue.Trim();
+            }
+
+            throw new ArgumentException($"缺少 BatchMode 参数: {argName}", argName);
+        }
+
+        /// <summary>
+        /// 构造文件服务器 BatchMode 验证请求。
+        /// TeamCity 透传的 serverUrl 和三段期望版本号在这里收敛成运行时 owner 可直接消费的显式请求对象。
+        /// </summary>
+        public static FileServerBatchVerificationRequest CreateFileServerBatchVerificationRequest(
+            string serverUrl,
+            string expectedCodeVersion,
+            string expectedAssetbundleVersion,
+            string expectedTableVersion,
+            bool resetLocalStateBeforeVerify = true)
+        {
+            return new FileServerBatchVerificationRequest()
+            {
+                ServerUrl = NormalizeRequiredBatchModeArg(serverUrl, FileServerUrlBatchArgName),
+                ExpectedVersionInfo = new FileServerVersionInfo()
+                {
+                    CodeVersion = NormalizeRequiredBatchModeArg(expectedCodeVersion, ExpectedCodeVersionBatchArgName),
+                    AssetBundleVersion = NormalizeRequiredBatchModeArg(expectedAssetbundleVersion,
+                        ExpectedAssetbundleVersionBatchArgName),
+                    TableVersion = NormalizeRequiredBatchModeArg(expectedTableVersion, ExpectedTableVersionBatchArgName),
+                },
+                ResetLocalStateBeforeVerify = resetLocalStateBeforeVerify,
+            };
+        }
+
+        /// <summary>
+        /// 从当前 Unity 进程命令行直接构造文件服务器 BatchMode 验证请求。
+        /// 这样 batchmode wrapper 只需要声明目标平台并转发到运行时验证 owner。
+        /// </summary>
+        public static FileServerBatchVerificationRequest CreateFileServerBatchVerificationRequestFromCommandLine(
+            bool resetLocalStateBeforeVerify = true)
+        {
+            return CreateFileServerBatchVerificationRequest(
+                GetBatchModeCommandLineArg(FileServerUrlBatchArgName),
+                GetBatchModeCommandLineArg(ExpectedCodeVersionBatchArgName),
+                GetBatchModeCommandLineArg(ExpectedAssetbundleVersionBatchArgName),
+                GetBatchModeCommandLineArg(ExpectedTableVersionBatchArgName),
+                resetLocalStateBeforeVerify);
+        }
+
+        /// <summary>
+        /// 按当前 Unity 进程命令行直接执行文件服务器 BatchMode 验证。
+        /// 该入口把请求构造、阶段日志、真实下载验证和失败异常统一收敛在文件服务器 owner 内，editor wrapper 只需要补齐目标平台并转发。
+        /// </summary>
+        public static void VerifyFileServerAssetsForBatchModeFromCommandLine(RuntimePlatform targetPlatform)
+        {
+            var request = CreateFileServerBatchVerificationRequestFromCommandLine();
+            request.TargetPlatform = targetPlatform;
+            Debug.Log(
+                "[CI][VerifyClientRes] 测试目的=验证文件服务器共享版控会触发真实下载，并按 art_assets.info 资产列表逐项执行本地加载校验。 实现手段=解析远端三段版控、下载差异资源、重建本地元数据，并在主线程逐条校验 Code/AssetBundle/Table 样本。");
+            Debug.Log(
+                $"[CI][VerifyClientRes] platform={targetPlatform} serverUrl={request.ServerUrl} expectedVersion={request.ExpectedVersionInfo.RawValue}");
+
+            var result = BResources.VerifyFileServerAssetsForBatchModeWithDevOps(request);
+
+            Debug.Log(
+                $"[CI][VerifyClientRes] actualVersion={result.ActualVersion} codeAsset={result.CodeAssetLocalPath} assetBundleFirstTarget={result.AssetBundleValidationFirstTarget} assetBundleAssetCount={result.AssetBundleValidationEntries.Count} assetBundleBundleCount={result.AssetBundleAssetLocalPaths.Count} tableAsset={result.TableAssetLocalPath}");
+            if (!result.IsSuccess)
+            {
+                throw new Exception(
+                    $"[CI][VerifyClientRes] 文件服务器 BatchMode 验证失败! platform={targetPlatform} expected={result.ExpectedVersion} actual={result.ActualVersion} error={result.Error}");
+            }
+        }
+
+        /// <summary>
         /// CI BatchMode AssetBundle 逐资产本地加载校验项。
         /// 它把 <c>art_assets.info</c> 中的单条可加载资产记录扩展成“bundle 本地路径 + 资产标识”的运行态描述，
         /// 供主线程按资产列表逐条执行真实 <c>LoadAsset</c> 校验。

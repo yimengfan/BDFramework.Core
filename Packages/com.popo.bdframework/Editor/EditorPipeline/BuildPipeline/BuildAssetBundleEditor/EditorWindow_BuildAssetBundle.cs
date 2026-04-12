@@ -6,6 +6,7 @@ using BDFramework.Editor.Tools;
 using BDFramework.Core.Tools;
 using BDFramework.Editor;
 using BDFramework.Editor.DevOps;
+using BDFramework.Editor.HotfixScript;
 using BDFramework.Editor.PublishPipeline;
 using UnityEditor.Build.Player;
 using UnityEngine.AssetGraph;
@@ -209,7 +210,7 @@ namespace BDFramework.Editor.BuildPipeline.AssetBundle
             //关闭配置窗口
             AssetGraphEditorWindow.Window?.Close();
             //ab会先构建代码,提前构建，避免浪费时间
-            var ret = PublishPipeLineCI.CheckCode();
+            var ret = BuildTools_HotfixScript.CheckEditorCode();
             if (ret)
             {
                 //生成Assetbundlebunle

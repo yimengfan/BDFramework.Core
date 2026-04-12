@@ -1,6 +1,7 @@
 ﻿using BDFramework.Core.Tools;
 using BDFramework.Editor.Unity3dEx;
 using UnityEditor;
+using UnityEditor.Build.Player;
 using UnityEngine;
 
 namespace BDFramework.Editor.HotfixScript
@@ -22,6 +23,20 @@ namespace BDFramework.Editor.HotfixScript
         {
             Unity3dEditorEx.AddSymbols(ENABLE_HYCLR);
             HyCLREditorTools.SetBDFramework2HCLRConfig();
+        }
+
+
+        /// <summary>
+        /// 在构建前执行一次玩家脚本编译检查。
+        /// 该能力属于代码构建 owner，本身不依赖 CI wrapper，编辑器界面和 BatchMode 入口都应该直接复用这里的实现。
+        /// </summary>
+        static public bool CheckEditorCode()
+        {
+            var setting = new ScriptCompilationSettings();
+            setting.options = ScriptCompilationOptions.Assertions;
+            setting.target = BuildTarget.Android;
+            var ret = PlayerBuildInterface.CompilePlayerScripts(setting, BApplication.Library + "/BuildTest");
+            return ret.assemblies.Contains("Assembly-CSharp.dll");
         }
 
 
