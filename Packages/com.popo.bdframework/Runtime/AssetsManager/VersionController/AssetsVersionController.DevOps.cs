@@ -311,7 +311,7 @@ namespace BDFramework.ResourceMgr
                 return;
             }
 
-            var formattedMessage = $"【CI】【FileServer】{message}";
+            var formattedMessage = $"[CI][FileServer] {message}";
             if (color == Color.red)
             {
                 Debug.LogError(formattedMessage);
@@ -325,6 +325,47 @@ namespace BDFramework.ResourceMgr
             }
 
             Debug.Log(formattedMessage);
+        }
+
+        /// <summary>
+        /// 生成 CI BatchMode 文件服务器阶段进度日志，统一输出阶段名、序号和当前目标路径，避免 TeamCity 上只看到“开始了但不知道卡在哪”。
+        /// </summary>
+        internal static string FormatFileServerBatchProgressMessage(string stageName,
+            int currentIndex,
+            int totalCount,
+            string currentTargetPath,
+            string extraInfo = null)
+        {
+            var normalizedStageName = string.IsNullOrWhiteSpace(stageName) ? "unknown" : stageName.Trim();
+            var normalizedIndex = currentIndex < 0 ? 0 : currentIndex;
+            var normalizedTotal = totalCount < 0 ? 0 : totalCount;
+            var normalizedTargetPath = string.IsNullOrWhiteSpace(currentTargetPath)
+                ? "<none>"
+                : currentTargetPath.Trim();
+            var normalizedExtraInfo = string.IsNullOrWhiteSpace(extraInfo) ? string.Empty : $" {extraInfo.Trim()}";
+            return $"{normalizedStageName} progress={normalizedIndex}/{normalizedTotal} target={normalizedTargetPath}{normalizedExtraInfo}";
+        }
+
+        /// <summary>
+        /// 输出 CI BatchMode 细粒度阶段进度日志。
+        /// 统一通过同一格式输出，便于 TeamCity 日志检索与人工定位当前卡住的资源或阶段。
+        /// </summary>
+        private static void LogFileServerBatchProgress(string stageName,
+            int currentIndex,
+            int totalCount,
+            string currentTargetPath,
+            Color color,
+            string extraInfo = null)
+        {
+            if (!IsUnityBatchModeProcess())
+            {
+                return;
+            }
+
+            LogFileServerFlow(
+                FormatFileServerBatchProgressMessage(stageName, currentIndex, totalCount, currentTargetPath,
+                    extraInfo),
+                color);
         }
 
         /// <summary>
@@ -666,6 +707,9 @@ namespace BDFramework.ResourceMgr
 
                 componentContexts[componentKind] = loadContextResult.Item2;
                 SaveFileServerComponentCache(resolveResult.CacheDir, loadContextResult.Item2);
+                LogFileServerFlow(
+                    $"组件上下文加载完成 component={componentKind} version={remoteVersion} assetCount={loadContextResult.Item2.AssetItems.Count}",
+                    Color.green);
             }
 
             if (!componentContexts.TryGetValue(FileServerComponentKind.Code, out var codeContext))
@@ -696,6 +740,10 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
+            LogFileServerFlow(
+                $"代表性资源样本已选中 code={codeAsset.LocalPath} assetBundle={assetBundleAsset.LocalPath} table={tableAsset.LocalPath}",
+                Color.green);
+
             result.CodeAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, codeAsset.LocalPath);
             result.AssetBundleAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, assetBundleAsset.LocalPath);
             result.TableAssetLocalPath = IPath.Combine(resolveResult.FirstLoadDir, tableAsset.LocalPath);
@@ -717,6 +765,7 @@ namespace BDFramework.ResourceMgr
                 return result;
             }
 
+            LogFileServerFlow($"开始重建文件服务器本地元数据 componentCount={componentContexts.Count}", Color.cyan);
             RebuildFileServerLocalMetadata(resolveResult.FirstLoadDir, resolveResult.CacheDir, componentContexts,
                 allowBasePackageFallback: false);
             foreach (var componentPair in componentContexts)
@@ -728,7 +777,9 @@ namespace BDFramework.ResourceMgr
 
             resolveResult.State.InstalledVersion = resolveResult.VersionInfo.RawValue;
             resolveResult.State.LastKnownRemoteVersion = resolveResult.VersionInfo.RawValue;
+            LogFileServerFlow($"开始回写文件服务器本地状态 installedVersion={resolveResult.State.InstalledVersion}", Color.cyan);
             SaveFileServerState(resolveResult.CacheDir, resolveResult.State);
+            LogFileServerFlow($"文件服务器本地状态回写完成 managedComponentCount={resolveResult.State.ManagedFiles.Count}", Color.green);
 
             // Phase 5: 先做全量 hash/存在性校验，再确认 package_build.info 已经落成当前链路的三段版本号。
             var validateError = await ValidateFileServerManagedAssets(resolveResult.FirstLoadDir,
@@ -739,6 +790,8 @@ namespace BDFramework.ResourceMgr
                 result.Error = validateError;
                 return result;
             }
+
+            LogFileServerFlow("文件服务器全量资源校验通过，开始代表性本地加载校验。", Color.green);
 
             // Phase 6: 三类资产除了全量存在性/hash 校验外，还要各自做一次代表性 payload 的真实本地打开验证。
             var representativeLoadError = await ValidateFileServerRepresentativeLocalLoads(
@@ -1429,6 +1482,7 @@ namespace BDFramework.ResourceMgr
         {
             var failedItems = new ConcurrentBag<FileServerDownloadItem>();
             var downloadedItems = new ConcurrentBag<FileServerDownloadItem>();
+            var processedItemCount = 0;
             var needRestart = 0;
             if (downloadItems.Count == 0)
             {
@@ -1449,6 +1503,13 @@ namespace BDFramework.ResourceMgr
                         if (downloadSucceeded)
                         {
                             downloadedItems.Add(item);
+                            var completedCount = Interlocked.Increment(ref processedItemCount);
+                            LogFileServerBatchProgress("下载资源",
+                                completedCount,
+                                downloadItems.Count,
+                                item.AssetItem?.LocalPath,
+                                Color.cyan,
+                                $"component={item.ComponentKind}");
                             if (IsRestartRequiredAsset(item.AssetItem))
                             {
                                 Interlocked.Exchange(ref needRestart, 1);
@@ -1457,6 +1518,13 @@ namespace BDFramework.ResourceMgr
                         else
                         {
                             failedItems.Add(item);
+                            var completedCount = Interlocked.Increment(ref processedItemCount);
+                            LogFileServerBatchProgress("下载资源失败",
+                                completedCount,
+                                downloadItems.Count,
+                                item.AssetItem?.LocalPath,
+                                Color.red,
+                                $"component={item.ComponentKind}");
                         }
                     }
                     finally
@@ -1733,8 +1801,19 @@ namespace BDFramework.ResourceMgr
                 targetAssets = componentContexts.Values.SelectMany(item => item.AssetItems).Distinct().ToList();
             }
 
-            foreach (var assetItem in targetAssets)
+            var targetAssetList = targetAssets.ToList();
+            LogFileServerFlow(
+                $"开始文件服务器资源校验 total={targetAssetList.Count} subPackageMode={isSubPackageMode} localDownloadedOnly={preferLocalDownloadedAssetsOnly}",
+                Color.cyan);
+
+            var validatedCount = 0;
+
+            foreach (var assetItem in targetAssetList)
             {
+                validatedCount++;
+                LogFileServerBatchProgress("校验资源", validatedCount, targetAssetList.Count, assetItem.LocalPath,
+                    Color.cyan);
+
                 var isValid = true;
                 if (string.IsNullOrEmpty(assetItem.HashName))
                 {
@@ -1760,14 +1839,17 @@ namespace BDFramework.ResourceMgr
                 if (!isValid)
                 {
                     errors.Add(assetItem.LocalPath);
+                    LogFileServerFlow($"文件服务器资源校验命中失败 target={assetItem.LocalPath}", Color.red);
                 }
             }
 
             if (errors.Count == 0)
             {
+                LogFileServerFlow($"文件服务器资源校验完成 total={targetAssetList.Count}", Color.green);
                 return null;
             }
 
+            LogFileServerFlow($"文件服务器资源校验失败 failedCount={errors.Count}", Color.red);
             return "文件服务器资源校验失败:\n" + string.Join("\n", errors);
         }
 
@@ -1781,13 +1863,18 @@ namespace BDFramework.ResourceMgr
             string assetBundleAssetLocalPath,
             string tableAssetLocalPath)
         {
+            LogFileServerBatchProgress("代表性本地加载", 1, 3, codeAssetLocalPath, Color.cyan, "component=Code");
             var codeLoadError = ValidateFileServerCodeRepresentativeLocalLoad(codeAssetLocalPath);
             if (!string.IsNullOrEmpty(codeLoadError))
             {
                 return codeLoadError;
             }
 
+            LogFileServerFlow($"代表性本地加载通过 component=Code target={codeAssetLocalPath}", Color.green);
+
             await UniTask.SwitchToMainThread();
+            LogFileServerBatchProgress("代表性本地加载", 2, 3, assetBundleAssetLocalPath, Color.cyan,
+                "component=AssetBundle");
             var assetBundleLoadError = ValidateFileServerAssetBundleRepresentativeLocalLoad(assetBundleAssetLocalPath);
             await UniTask.SwitchToThreadPool();
             if (!string.IsNullOrEmpty(assetBundleLoadError))
@@ -1795,11 +1882,17 @@ namespace BDFramework.ResourceMgr
                 return assetBundleLoadError;
             }
 
+            LogFileServerFlow($"代表性本地加载通过 component=AssetBundle target={assetBundleAssetLocalPath}", Color.green);
+
+            LogFileServerBatchProgress("代表性本地加载", 3, 3, tableAssetLocalPath, Color.cyan, "component=Table");
             var tableLoadError = ValidateFileServerTableRepresentativeLocalLoad(tableAssetLocalPath);
             if (!string.IsNullOrEmpty(tableLoadError))
             {
                 return tableLoadError;
             }
+
+            LogFileServerFlow($"代表性本地加载通过 component=Table target={tableAssetLocalPath}", Color.green);
+            LogFileServerFlow("代表性本地加载校验全部完成。", Color.green);
 
             return null;
         }
@@ -1918,12 +2011,16 @@ namespace BDFramework.ResourceMgr
             Dictionary<FileServerComponentKind, FileServerComponentContext> componentContexts,
             bool allowBasePackageFallback = true)
         {
+            LogFileServerFlow(
+                $"开始重建本地元数据 componentCount={componentContexts.Count} allowBasePackageFallback={allowBasePackageFallback}",
+                Color.cyan);
             var mergedAssets = componentContexts.Values
                 .Where(context => context.ComponentKind != FileServerComponentKind.Table)
                 .SelectMany(context => context.AssetItems);
             var normalizedAssets = NormalizeFileServerManagedAssetItems(mergedAssets);
             if (normalizedAssets.Count > 0)
             {
+                LogFileServerFlow($"写入本地 assets.info assetCount={normalizedAssets.Count}", Color.cyan);
                 FileHelper.WriteAllText(IPath.Combine(firstLoadDir, BResources.ASSETS_INFO_PATH),
                     CsvSerializer.SerializeToString(normalizedAssets));
             }
@@ -1939,12 +2036,14 @@ namespace BDFramework.ResourceMgr
                 componentContexts.TryGetValue(FileServerComponentKind.Table, out var tableContext)
                     ? tableContext.PackageBuildInfo
                     : null);
+            LogFileServerFlow("写入本地 package_build.info。", Color.cyan);
             FileHelper.WriteAllText(IPath.Combine(firstLoadDir, FileServerPackageBuildInfoPath),
                 JsonMapper.ToJson(mergedPackageBuildInfo));
 
             var subPackagePath = GetFileServerSubPackageCachePath(cacheDir);
             if (File.Exists(subPackagePath))
             {
+                LogFileServerFlow("回写本地 assets_sub_package 配置缓存。", Color.cyan);
                 FileHelper.WriteAllText(IPath.Combine(firstLoadDir, BResources.ASSETS_SUB_PACKAGE_CONFIG_PATH),
                     File.ReadAllText(subPackagePath));
             }

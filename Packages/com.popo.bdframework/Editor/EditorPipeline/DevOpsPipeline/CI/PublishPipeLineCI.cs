@@ -859,7 +859,7 @@ namespace BDFramework.Editor.DevOps
             // WindowsEditor，所以必须把 CLI 指定的目标平台显式注入验证请求，让运行时按正确平台匹配远端版本。
             request.TargetPlatform = platform;
             Debug.Log(
-                $"【CI】VerifyClientRes Target:{buildTarget} Platform:{platform} ServerUrl:{request.ServerUrl} ExpectedVersion:{request.ExpectedVersionInfo.RawValue}");
+                $"[CI][VerifyClientRes] target={buildTarget} platform={platform} serverUrl={request.ServerUrl} expectedVersion={request.ExpectedVersionInfo.RawValue}");
 
             if (buildTarget == BuildTarget.Android)
             {
@@ -873,11 +873,11 @@ namespace BDFramework.Editor.DevOps
 
             // Phase 3: 把关键验证结果和代表性样本路径显式输出，失败时直接抛异常让 batchmode 退出非零。
             Debug.Log(
-                $"【CI】VerifyClientRes ActualVersion:{result.ActualVersion} CodeAsset:{result.CodeAssetLocalPath} AssetbundleAsset:{result.AssetBundleAssetLocalPath} TableAsset:{result.TableAssetLocalPath}");
+                $"[CI][VerifyClientRes] actualVersion={result.ActualVersion} codeAsset={result.CodeAssetLocalPath} assetBundleAsset={result.AssetBundleAssetLocalPath} tableAsset={result.TableAssetLocalPath}");
             if (!result.IsSuccess)
             {
                 throw new Exception(
-                    $"【CI】文件服务器 BatchMode 验证失败! Target:{buildTarget} Expected:{result.ExpectedVersion} Actual:{result.ActualVersion} Error:{result.Error}");
+                    $"[CI][VerifyClientRes] 文件服务器 BatchMode 验证失败! target={buildTarget} expected={result.ExpectedVersion} actual={result.ActualVersion} error={result.Error}");
             }
         }
 

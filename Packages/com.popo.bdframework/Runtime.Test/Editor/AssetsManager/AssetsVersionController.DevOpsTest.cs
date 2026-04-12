@@ -185,6 +185,24 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 验证 CI BatchMode 文件服务器进度日志会稳定带出阶段名、序号、总量和目标路径。
+        /// </summary>
+        [Test]
+        public void FormatFileServerBatchProgressMessage_IncludesStageCountsAndTarget()
+        {
+            VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget();
+        }
+
+        /// <summary>
+        /// 验证 CI BatchMode 文件服务器进度日志在缺省输入下仍会回退成稳定占位文本，避免 TeamCity 日志缺字段。
+        /// </summary>
+        [Test]
+        public void FormatFileServerBatchProgressMessage_UsesFallbackForMissingValues()
+        {
+            VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues();
+        }
+
+        /// <summary>
         /// 以纯异常校验方式验证共享版控解析结果，供 batchmode 路径复用。
         /// </summary>
         internal static void VerifyTryParseFileServerVersionInfoParsesThreeSegments()
@@ -686,6 +704,33 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证 CI BatchMode 文件服务器进度日志格式，供 TeamCity 阶段排障复用。
+        /// </summary>
+        internal static void VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget()
+        {
+            var message = AssetsVersionController.FormatFileServerBatchProgressMessage(
+                "校验资源",
+                7,
+                61,
+                "hotfix/code.dll",
+                "component=Code");
+
+            EnsureEqual("校验资源 progress=7/61 target=hotfix/code.dll component=Code", message,
+                "进度日志格式应稳定输出阶段、序号、路径和补充信息。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证 CI BatchMode 文件服务器进度日志的缺省占位文案。
+        /// </summary>
+        internal static void VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues()
+        {
+            var message = AssetsVersionController.FormatFileServerBatchProgressMessage(null, -3, -9, null);
+
+            EnsureEqual("unknown progress=0/0 target=<none>", message,
+                "进度日志缺省输入时应回退成稳定占位文本。");
+        }
+
+        /// <summary>
         /// 解析当前编辑器宿主能直接本地打开的 AssetBundle 构建目标。
         /// 测试只关心 bundle 是否可被当前 Unity 进程打开，因此固定映射到宿主编辑器平台，避免用 Android/iOS 产物做本地打开校验时出现平台不匹配假失败。
         /// </summary>
@@ -789,7 +834,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 18;
+            const int totalCheckCount = 20;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -860,6 +905,14 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ThrowsTimeoutWhenTaskDoesNotFinish),
                 AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_IncludesStageCountsAndTarget),
+                AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageIncludesStageCountsAndTarget,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.FormatFileServerBatchProgressMessage_UsesFallbackForMissingValues),
+                AssetsVersionControllerDevOpsTest.VerifyFormatFileServerBatchProgressMessageUsesFallbackForMissingValues,
                 reportBuilder, ref failedCount);
 
             // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。
