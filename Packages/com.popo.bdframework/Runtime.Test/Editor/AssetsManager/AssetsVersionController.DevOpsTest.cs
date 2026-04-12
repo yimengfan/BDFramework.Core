@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using BDFramework.Asset;
 using BDFramework.ResourceMgr;
 using BDFramework.Sql;
@@ -163,6 +164,24 @@ namespace BDFramework.EditorTest.AssetsManager
         public void ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite()
         {
             VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite();
+        }
+
+        /// <summary>
+        /// 验证文件服务器请求超时包装器在任务按时完成时会直接返回原始结果。
+        /// </summary>
+        [Test]
+        public void AwaitFileServerRequestWithTimeout_ReturnsResultWhenTaskCompletesInTime()
+        {
+            VerifyAwaitFileServerRequestWithTimeoutReturnsResultWhenTaskCompletesInTime();
+        }
+
+        /// <summary>
+        /// 验证文件服务器请求超时包装器在任务长时间无响应时会抛出明确超时并触发取消回调。
+        /// </summary>
+        [Test]
+        public void AwaitFileServerRequestWithTimeout_ThrowsTimeoutWhenTaskDoesNotFinish()
+        {
+            VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish();
         }
 
         /// <summary>
@@ -625,6 +644,48 @@ namespace BDFramework.EditorTest.AssetsManager
         }
 
         /// <summary>
+        /// 以纯异常校验方式验证请求超时包装器的成功路径，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyAwaitFileServerRequestWithTimeoutReturnsResultWhenTaskCompletesInTime()
+        {
+            var cancelInvoked = false;
+            var result = AssetsVersionController.AwaitFileServerRequestWithTimeout(
+                Task.FromResult("ok"),
+                TimeSpan.FromMilliseconds(20),
+                "http://127.0.0.1/success",
+                () => cancelInvoked = true).GetAwaiter().GetResult();
+
+            EnsureEqual("ok", result, "超时包装器成功路径应返回原始结果。");
+            EnsureTrue(!cancelInvoked, "超时包装器成功路径不应触发取消回调。");
+        }
+
+        /// <summary>
+        /// 以纯异常校验方式验证请求超时包装器的超时路径，供 batchmode 路径复用。
+        /// </summary>
+        internal static void VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish()
+        {
+            var neverCompletes = new TaskCompletionSource<string>();
+            var cancelInvoked = false;
+
+            try
+            {
+                AssetsVersionController.AwaitFileServerRequestWithTimeout(
+                    neverCompletes.Task,
+                    TimeSpan.FromMilliseconds(20),
+                    "http://127.0.0.1/slow",
+                    () => cancelInvoked = true).GetAwaiter().GetResult();
+                throw new InvalidOperationException("长时间无响应的文件服务器请求应触发 TimeoutException。");
+            }
+            catch (TimeoutException exception)
+            {
+                EnsureTrue(exception.Message.Contains("http://127.0.0.1/slow"),
+                    "超时异常应包含请求地址，方便 CI 直接定位问题资源。");
+            }
+
+            EnsureTrue(cancelInvoked, "超时路径应触发取消回调，避免底层请求继续悬挂。");
+        }
+
+        /// <summary>
         /// 解析当前编辑器宿主能直接本地打开的 AssetBundle 构建目标。
         /// 测试只关心 bundle 是否可被当前 Unity 进程打开，因此固定映射到宿主编辑器平台，避免用 Android/iOS 产物做本地打开校验时出现平台不匹配假失败。
         /// </summary>
@@ -728,7 +789,7 @@ namespace BDFramework.EditorTest.AssetsManager
             Debug.Log("AssetsVersionController DevOps standalone batch verification starting.");
             var reportBuilder = new StringBuilder();
             var failedCount = 0;
-            const int totalCheckCount = 16;
+            const int totalCheckCount = 18;
 
             RunCheck(nameof(AssetsVersionControllerDevOpsTest.TryParseGlobalVersionInfoJson_ExtractsPlatformVersionNum),
                 AssetsVersionControllerDevOpsTest.VerifyTryParseGlobalVersionInfoJsonExtractsPlatformVersionNum,
@@ -791,6 +852,14 @@ namespace BDFramework.EditorTest.AssetsManager
             RunCheck(
                 nameof(AssetsVersionControllerDevOpsTest.ValidateFileServerTableRepresentativeLocalLoad_SucceedsForReadableSqlite),
                 AssetsVersionControllerDevOpsTest.VerifyValidateFileServerTableRepresentativeLocalLoadSucceedsForReadableSqlite,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ReturnsResultWhenTaskCompletesInTime),
+                AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutReturnsResultWhenTaskCompletesInTime,
+                reportBuilder, ref failedCount);
+            RunCheck(
+                nameof(AssetsVersionControllerDevOpsTest.AwaitFileServerRequestWithTimeout_ThrowsTimeoutWhenTaskDoesNotFinish),
+                AssetsVersionControllerDevOpsTest.VerifyAwaitFileServerRequestWithTimeoutThrowsTimeoutWhenTaskDoesNotFinish,
                 reportBuilder, ref failedCount);
 
             // Phase 2: 把批验证结果写到 Library，方便 CI 和本地 batchmode 直接收集报告。

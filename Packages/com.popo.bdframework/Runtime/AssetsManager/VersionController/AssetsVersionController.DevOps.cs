@@ -271,6 +271,18 @@ namespace BDFramework.ResourceMgr
         /// </summary>
         private const string FileServerSubPackageCacheFileName = "assets_subpack.info";
 
+        /// <summary>
+        /// 文件服务器文本元数据请求的单次超时时间。
+        /// 避免 global_version.info / assets.info 等文本请求在 CI 上无限等待。
+        /// </summary>
+        private static readonly TimeSpan FileServerTextRequestTimeout = TimeSpan.FromSeconds(30);
+
+        /// <summary>
+        /// 文件服务器二进制资源下载的单次超时时间。
+        /// 避免某个资源连接挂起时把整个 TeamCity BatchMode 长时间卡住。
+        /// </summary>
+        private static readonly TimeSpan FileServerAssetRequestTimeout = TimeSpan.FromSeconds(180);
+
         private static readonly FileServerComponentKind[] FileServerManagedComponents =
         {
             FileServerComponentKind.Code,
@@ -278,9 +290,32 @@ namespace BDFramework.ResourceMgr
             FileServerComponentKind.Table,
         };
 
+        /// <summary>
+        /// 统一输出文件服务器流程日志。
+        /// BatchMode 下会额外镜像到 Unity 控制台，确保 TeamCity 可以直接看到关键阶段、警告和错误。
+        /// </summary>
         private static void LogFileServerFlow(string message, Color color)
         {
             BDebug.Log(LogTag, $"[FileServer] {message}", color);
+            if (!Application.isBatchMode)
+            {
+                return;
+            }
+
+            var formattedMessage = $"【CI】【FileServer】{message}";
+            if (color == Color.red)
+            {
+                Debug.LogError(formattedMessage);
+                return;
+            }
+
+            if (color == Color.yellow)
+            {
+                Debug.LogWarning(formattedMessage);
+                return;
+            }
+
+            Debug.Log(formattedMessage);
         }
 
         /// <summary>
@@ -1376,6 +1411,9 @@ namespace BDFramework.ResourceMgr
             return new Tuple<string, FileServerComponentContext>(null, context);
         }
 
+        /// <summary>
+        /// 并发下载文件服务器差异资源，并把失败清单与是否需要重启的结果统一返回。
+        /// </summary>
         private async Task<Tuple<List<FileServerDownloadItem>, bool>> DownloadFileServerAssets(
             List<FileServerDownloadItem> downloadItems,
             Action<AssetItem, List<AssetItem>> onDownloadProccess)
@@ -1426,6 +1464,9 @@ namespace BDFramework.ResourceMgr
             return new Tuple<List<FileServerDownloadItem>, bool>(failedItems.ToList(), needRestart == 1);
         }
 
+        /// <summary>
+        /// 下载单个文件服务器资源，并在 hash 校验通过后以原子替换方式落到本地。
+        /// </summary>
         private async Task<bool> DownloadFileServerAsset(FileServerDownloadItem downloadItem,
             List<AssetItem> allDownloadAssets,
             Action<AssetItem, List<AssetItem>> onDownloadProccess)
@@ -1438,7 +1479,11 @@ namespace BDFramework.ResourceMgr
                 {
                     using (var client = new WebClient())
                     {
-                        bytes = await client.DownloadDataTaskAsync(downloadItem.RemoteUrl);
+                        bytes = await AwaitFileServerRequestWithTimeout(
+                            client.DownloadDataTaskAsync(downloadItem.RemoteUrl),
+                            FileServerAssetRequestTimeout,
+                            downloadItem.RemoteUrl,
+                            client.CancelAsync);
                     }
 
                     if (downloadItem.RequireHashValidation && !string.IsNullOrEmpty(downloadItem.AssetItem.HashName))
@@ -1458,6 +1503,9 @@ namespace BDFramework.ResourceMgr
                 catch (Exception e)
                 {
                     err = e.Message;
+                    LogFileServerFlow(
+                        $"文件服务器资源下载重试 attempt={retryIndex + 1}/{RETRY_COUNT} url={downloadItem.RemoteUrl} err={err}",
+                        retryIndex == RETRY_COUNT - 1 ? Color.red : Color.yellow);
                 }
             }
 
@@ -1494,6 +1542,46 @@ namespace BDFramework.ResourceMgr
 
             FileHelper.Move(tempDownloadPath, downloadItem.FinalLocalPath);
             return true;
+        }
+
+        /// <summary>
+        /// 为单个文件服务器网络请求施加显式超时，并在超时后执行调用方提供的取消动作。
+        /// 这样 CI 遇到半开连接或无响应 socket 时，会以明确异常结束，而不是无限挂起。
+        /// </summary>
+        internal static async Task<T> AwaitFileServerRequestWithTimeout<T>(
+            Task<T> requestTask,
+            TimeSpan timeout,
+            string requestUrl,
+            Action onTimeout = null)
+        {
+            if (requestTask == null)
+            {
+                throw new ArgumentNullException(nameof(requestTask));
+            }
+
+            if (timeout <= TimeSpan.Zero)
+            {
+                return await requestTask;
+            }
+
+            var timeoutTask = Task.Delay(timeout);
+            var completedTask = await Task.WhenAny(requestTask, timeoutTask);
+            if (completedTask == requestTask)
+            {
+                return await requestTask;
+            }
+
+            try
+            {
+                onTimeout?.Invoke();
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning($"【CI】【FileServer】请求超时后的取消回调失败 url={requestUrl} err={exception.Message}");
+            }
+
+            throw new TimeoutException(
+                $"文件服务器请求超时 timeout={timeout.TotalSeconds:0}s url={requestUrl}");
         }
 
         /// <summary>
@@ -2335,6 +2423,10 @@ namespace BDFramework.ResourceMgr
             return targetAssets.Select(item => item.LocalPath).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         }
 
+        /// <summary>
+        /// 以有限重试和显式超时读取文件服务器文本元数据。
+        /// 404 会被单独标记成“不存在”，其余异常会保留最后一次错误文本返回给调用方。
+        /// </summary>
         private async Task<Tuple<bool, bool, string, string>> DownloadTextWithRetry(string url)
         {
             string error = null;
@@ -2345,7 +2437,11 @@ namespace BDFramework.ResourceMgr
                 {
                     using (var client = new WebClient())
                     {
-                        var content = await client.DownloadStringTaskAsync(url);
+                        var content = await AwaitFileServerRequestWithTimeout(
+                            client.DownloadStringTaskAsync(url),
+                            FileServerTextRequestTimeout,
+                            url,
+                            client.CancelAsync);
                         return new Tuple<bool, bool, string, string>(true, false, content, null);
                     }
                 }
@@ -2364,6 +2460,13 @@ namespace BDFramework.ResourceMgr
                 catch (Exception e)
                 {
                     error = e.Message;
+                }
+
+                if (!string.IsNullOrEmpty(error) && !isNotFound)
+                {
+                    LogFileServerFlow(
+                        $"文件服务器文本请求重试 attempt={retryIndex + 1}/{RETRY_COUNT} url={url} err={error}",
+                        retryIndex == RETRY_COUNT - 1 ? Color.red : Color.yellow);
                 }
             }
 
