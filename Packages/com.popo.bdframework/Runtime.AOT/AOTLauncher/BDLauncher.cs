@@ -92,8 +92,11 @@ namespace BDFramework
             Debug.Log("------------------AOT Start-----------------------");
 
             // Phase 2: 只负责把 AOT 与热更代码装进当前进程，不在这里直接启动资源和管理器系统。
+
             ScriptLoderAOT.Load(ClientVersion);
 
+            Debug.Log("<color=yellow>执行反射：ScriptLoder.Init()，装载热更代码 </color>");
+            InitHotfixScriptLoder();
             // Phase 3: 记录装载完成；真正的业务启动仍等待 BDLauncherBridge.Launch()。
             Debug.Log("------------------AOT Complete！ -----------------------");
         }
@@ -129,6 +132,43 @@ namespace BDFramework
         }
         
      
+     
+        /// <summary>
+        /// 初始化热更域的入口。
+        /// 这里通过反射查找静态的 <c>ScriptLoder.Init()</c>，以兼容运行时程序集分离后的热更加载方式。
+        /// </summary>
+        public void InitHotfixScriptLoder()
+        {
+            // Phase 1: 在当前已加载程序集里查找热更脚本入口类型，避免把启动器直接绑定到具体程序集引用。
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
+            {
+                var type = assembly.GetType("BDFramework.ScriptLoder");
+                if (type == null)
+                {
+                    continue;
+                }
+
+                // Phase 2: 入口是静态方法，必须按静态方法查找并用 null 作为调用目标。
+                var method = type.GetMethod("Init", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                if (method == null)
+                {
+                    Debug.LogException(new Exception("未找到 ScriptLoder.Init"));
+                    return;
+                }
+
+                method.Invoke(null, null);
+
+                Debug.Log("[Hotfix] ScriptLoder.Init() Success!!!");
+                return;
+            }
+
+            Debug.LogException(new Exception("未找到 ScriptLoder.Init"));
+        }
+        
+        
+        
+        
 
         /// <summary>
         /// 在 Editor 退出路径里转发运行时桥接层的收尾逻辑。

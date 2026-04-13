@@ -5,6 +5,7 @@ using BDFramework;
 using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using Cysharp.Threading.Tasks;
 using Game.Config;
 using LitJson;
 using UnityEngine;
@@ -15,19 +16,20 @@ using UnityEngine.UI;
 /// </summary>
 public class WindowPreconfig : MonoBehaviour
 {
-    // private InputField inputField;
+     private InputField inputField;
     private Text text_DownloadProcess;
     private Button btn_Download;
     private Button btn_DownloadRepair;
     private Button btn_GetSubPackage;
     private Button btn_Pass;
     private Button btn_ClearPersistent;
-
+    ServerConfigProcessor.Config serverConfig;
     /// <summary>
     /// 开始
     /// </summary>
     void Start()
     {
+        UniTask.Delay(2000).GetAwaiter().GetResult();
         //节点发现
         inputField = this.transform.Find("InputField").GetComponent<InputField>();
         text_DownloadProcess = this.transform.Find("text_DownloadProcess").GetComponent<Text>();
@@ -44,15 +46,16 @@ public class WindowPreconfig : MonoBehaviour
         this.btn_ClearPersistent.onClick.AddListener(OnClick_ClearPersistent);
         //
 
-        var config = GameConfigManager.Inst.GetConfig<ServerConfigProcessor.Config>();
+        this.serverConfig = GameConfigManager.Inst.GetConfig<ServerConfigProcessor.Config>();
         if (Application.isEditor)
         {
-            inputField.text = config.FileServerUrl;
+            inputField.text = this.serverConfig .FileServerUrl;
         }
         else
         {
-            inputField.text = config.FileServerUrl;
+            inputField.text = this.serverConfig .FileServerUrl;
         }
+        Debug.Log("FileServer:" + this.serverConfig.FileServerUrl);
     }
 
 
@@ -73,10 +76,10 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void OnClick_DownLoadAndLaunch()
     {
-        var config = GameConfigManager.Inst.GetConfig<ServerConfigProcessor.Config>();
+        
         
         Debug.Log(BApplication.persistentDataPath);
-        var url = config.FileServerUrl;
+        var url = serverConfig.FileServerUrl;
         float totalSize = -1;
         float curDoanloadSize = -1;
 
@@ -130,7 +133,7 @@ public class WindowPreconfig : MonoBehaviour
     private void Onclick_Download_RepairMode()
     {
         Debug.Log(BApplication.persistentDataPath);
-        var url = "http://" + this.inputField.text;
+        var url = serverConfig.FileServerUrl;
         float totalSize = 0;
         float curDoanloadSize = 0;
         BResources.StartAssetsVersionControl(UpdateMode.RepairFull, url, null, (curDownload, allDownloadList) =>
@@ -182,7 +185,7 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void OnClick_GetSubPackage()
     {
-        var url = "http://" + inputField.text;
+        var url = serverConfig.FileServerUrl;
         BResources.GetServerSubPacks(url, (map) =>
         {
             //获取到子包
@@ -223,7 +226,7 @@ public class WindowPreconfig : MonoBehaviour
     {
         Debug.Log(Application.persistentDataPath);
 
-        var url = "http://" + this.inputField.text;
+        var url = serverConfig.FileServerUrl;
         float totalSize = -1;
         float curDoanloadSize = -1;
         BResources.StartAssetsVersionControl(UpdateMode.CompareSimple, url, subPackageName,

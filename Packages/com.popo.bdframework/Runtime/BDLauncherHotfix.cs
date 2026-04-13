@@ -37,7 +37,7 @@ namespace BDFramework
             BDLauncher.Inst.gameObject.AddComponent<IEnumeratorTool>();
 
             // Phase 2: 先加载框架基础配置，解析后续资源与数据库初始化所需的路径和版本号。
-            GameConfigLoder.LoadFrameBaseConfig();
+            GameConfigLoder.LoadFrameworkConfig();
             var Config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
 
             BDebug.EnableLog(Tag);

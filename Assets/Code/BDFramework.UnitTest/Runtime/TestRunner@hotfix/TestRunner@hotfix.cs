@@ -125,7 +125,7 @@ namespace BDFramework.UnitTest
             // }
             // else if (testType == TestType.ILRuntime)
             // {
-              var  types = ScriptLoder.GetHostingTypes();
+              var  types = ScriptLoder.GetAppDomainHostingTypes();
             // }
 
             var attribute = typeof(UnitTestBaseAttribute);

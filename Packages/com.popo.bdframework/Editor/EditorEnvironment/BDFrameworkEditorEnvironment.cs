@@ -128,7 +128,7 @@ namespace BDFramework.Editor.Environment
                 //BDEditor初始化
                 BDEditorApplication.Init();
                 //加载主工程的DLL Type
-                Types = ScriptLoder.GetHostingTypes().ToArray();
+                Types = ScriptLoder.GetAppDomainHostingTypes().ToArray();
                 // var assemblyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp.dll";
                 // var editorAssemlyPath = BApplication.Library + "/ScriptAssemblies/Assembly-CSharp-Editor.dll";
                 // if (File.Exists(assemblyPath) && File.Exists(editorAssemlyPath))
@@ -144,7 +144,7 @@ namespace BDFramework.Editor.Environment
                 //编辑器下管理器注册
                 ManagerInstHelper.LoadManager(Types);
                 //加载框架配置
-                GameConfigLoder.LoadFrameBaseConfig(); 
+                GameConfigLoder.LoadFrameworkConfig(); 
                 
                 //Editor的管理器初始化
                 BDFrameworkPipelineHelper.Init();

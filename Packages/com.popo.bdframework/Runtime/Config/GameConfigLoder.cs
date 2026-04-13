@@ -10,7 +10,7 @@ namespace BDFramework.Configure
         /// <summary>
         /// 加载框架基本配置
         /// </summary>
-        public static void LoadFrameBaseConfig()
+        public static void LoadFrameworkConfig()
         {
             if (GameConfigManager.Inst != null)
             {

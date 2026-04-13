@@ -66,7 +66,7 @@ namespace Talos.E2E.Tests
             }
             else
             {
-                var types = ScriptLoder.GetHostingTypes();
+                var types = ScriptLoder.GetAppDomainHostingTypes();
                 
                 if (types == null || types.Count() == 0)
                 {

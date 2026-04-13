@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using BDFramework.Configure;
 using BDFramework.Mgr;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
-
+using UnityEngine.Scripting;
 
 namespace BDFramework
 {
@@ -32,14 +34,16 @@ namespace BDFramework
 
 
         /// <summary>
-        /// 初始化整个热更域
+        /// 初始化整个热更代码
         /// </summary>
-        static void Init()
+        [Preserve]
+        public static void Init()
         {
             //list
-            var types = ScriptLoder.GetHostingTypes();
-            //启动主工程的管理器
+            var types = ScriptLoder.GetAppDomainHostingTypes();
+            //加载主工程的管理器
             ManagerInstHelper.LoadManager(types);
+            GameConfigLoder.LoadFrameworkConfig();
         }
 
         /// <summary>
@@ -78,10 +82,11 @@ namespace BDFramework
 
 
         /// <summary>
-        /// 获取框架托管的所有类型
+        /// 获取程序域
+        /// 框架托管的所有类型
         /// </summary>
         /// <returns></returns>
-        static public IEnumerable<Type> GetHostingTypes()
+        static public IEnumerable<Type> GetAppDomainHostingTypes()
         {
             if (hostingTypeList != null)
             {
@@ -112,7 +117,7 @@ namespace BDFramework
                 }
             }
 
-            Debug.Log($"框架托管DLL:{string.Join(",", typeList.Select(t => t.FullName))}");
+            Debug.Log($"框架托管DLL:{string.Join("\n", typeList.Select(t => t.FullName))}");
 
 #if UNITY_EDITOR
             typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));

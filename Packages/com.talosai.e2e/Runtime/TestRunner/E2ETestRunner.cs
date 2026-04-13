@@ -154,7 +154,7 @@ namespace Talos.E2E
             int beforeCount = DiscoveredTests.Count;
 
             // 策略 1: 通过 HotfixAssembliesHelper 扫描（旧版热更加载器）
-            var hotfixTypes = ScriptLoder.GetHostingTypes();
+            var hotfixTypes = ScriptLoder.GetAppDomainHostingTypes();
             if (hotfixTypes != null && hotfixTypes.Count() > 0)
             {
                 foreach (var type in hotfixTypes)

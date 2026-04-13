@@ -349,7 +349,7 @@ namespace Talos.E2E.Editor
                 Debug.Log("[TalosE2E] BApplication.IsPlaying = true");
 
                 // 加载框架基础配置
-                BDFramework.Configure.GameConfigLoder.LoadFrameBaseConfig();
+                BDFramework.Configure.GameConfigLoder.LoadFrameworkConfig();
                 Debug.Log("[TalosE2E] 框架基础配置加载完成");
 
                 var config = GameConfigManager.Inst.GetConfig<GameBaseConfigProcessor.Config>();
