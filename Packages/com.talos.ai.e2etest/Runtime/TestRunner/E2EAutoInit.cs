@@ -87,13 +87,28 @@ namespace Talos.E2E
 
         /// <summary>
         /// 内部启动逻辑，执行实际的 E2E 系统初始化。
+        /// 
+        /// 启动模式选择：
+        /// - Editor 环境：使用静态模式（LaunchE2EStatic），配合 DidReloadScripts 管理生命周期
+        /// - 真机环境：使用 MonoBehaviour 模式（LaunchE2E），拥有完整 Unity 生命周期
         /// </summary>
         static private void LaunchInternal(int port)
         {
             try
             {
-                Debug.Log($"[TalosE2E] 正在启动 E2E 测试系统，端口: {port}");
-                TalosE2EBootstrap.LaunchE2E(port);
+                if (UnityEngine.Application.isEditor)
+                {
+                    // Editor 下使用静态模式——不依赖 MonoBehaviour，
+                    // 由 E2EEditorTools.OnDidReloadScripts 管理进出 PlayMode 的 TCP 恢复。
+                    Debug.Log($"[TalosE2E] Editor 模式，启动静态 E2E 服务，端口: {port}");
+                    TalosE2EBootstrap.LaunchE2EStatic(port);
+                }
+                else
+                {
+                    // 真机使用 MonoBehaviour 模式——拥有完整 Unity 生命周期（Update、OnApplicationQuit 等）
+                    Debug.Log($"[TalosE2E] 真机模式，启动 MonoBehaviour E2E 服务，端口: {port}");
+                    TalosE2EBootstrap.LaunchE2E(port);
+                }
             }
             catch (Exception ex)
             {

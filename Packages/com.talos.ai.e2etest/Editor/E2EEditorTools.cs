@@ -76,19 +76,20 @@ namespace Talos.E2E.Editor
 
         /// <summary>
         /// BatchMode 入口——供 CI 的 Unity Player 测试脚本调用。
-        /// 通过 Unity -batchmode -executeMethod 启动 Editor，自动进入 PlayMode 并启动 E2E 测试服务。
+        /// 通过 Unity -batchmode -executeMethod 启动 Editor，进入 PlayMode 并等待框架自动启动 E2E。
+        /// 
+        /// 职责（精简版）：
+        /// - 打开 BDFrame 场景
+        /// - 注册 EditorCommandHandler 委托
+        /// - 标记 E2E 活跃（供 DidReloadScripts 恢复用）
+        /// - 进入 PlayMode
+        /// 
+        /// 不负责：框架初始化、TCP 启动——这些由 BDLauncherBridge.Launch() → TryStartE2EAutomation() 统一处理。
         /// 
         /// 使用方式（命令行）：
         /// <code>
         /// Unity -batchmode -projectPath &lt;project&gt; -executeMethod Talos.E2E.Editor.E2EEditorTools.LaunchE2EBatchMode -talosPort 10002 -talosForceE2E
         /// </code>
-        /// 
-        /// 执行流程：
-        /// 1. 初始化 Editor 环境
-        /// 2. 读取 -talosPort 命令行参数
-        /// 3. 打开 AOTStart 测试场景
-        /// 4. 进入 PlayMode
-        /// 5. PlayMode 内热更 DLL 加载后自动启动 E2E TCP 服务
         /// </summary>
         public static void LaunchE2EBatchMode()
         {
@@ -129,117 +130,19 @@ namespace Talos.E2E.Editor
                 }
             }
 
-            // Phase 3: 订阅 PlayMode 启动完成事件，触发 E2E 初始化
-            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-
-            // Phase 3.5: 注册编辑器命令处理器委托
+            // Phase 3: 注册编辑器命令处理器委托
             // Runtime 程序集无法引用 Editor 程序集，通过委托注入 EditorCommandDispatcher
             TalosE2EBootstrap.EditorCommandHandler = EditorCommandDispatcher.Dispatch;
             Debug.Log("[TalosE2E] EditorCommandHandler 委托已注册（BatchMode）");
 
-            // Phase 3.6: 标记 E2E 活跃状态，以便 Domain Reload 后自动恢复
+            // Phase 4: 标记 E2E 活跃状态，以便 Domain Reload 后自动恢复
             MarkE2EActive(port);
 
-            // Phase 4: 进入 PlayMode
-            Debug.Log("[TalosE2E] 正在进入 PlayMode...");
+            // Phase 5: 进入 PlayMode
+            // 进入 PlayMode 后，BDLauncher → BDLauncherBridge.Launch() → TryStartE2EAutomation()
+            // E2E 的 TCP 启动完全由 Runtime 侧驱动，Editor 侧不再干预。
+            Debug.Log("[TalosE2E] 正在进入 PlayMode（E2E 启动将由 BDLauncherBridge 驱动）...");
             EditorApplication.EnterPlaymode();
-        }
-
-        /// <summary>
-        /// PlayMode 状态变化回调。
-        /// 当 Editor 进入 PlayMode 后，主动触发框架初始化，然后启动 E2E TCP 服务。
-        /// 
-        /// 在 Editor batchmode 下：
-        /// - BDLauncher.Start() 中 ScriptLoderAOT.Load() 会跳过热更 DLL 加载
-        /// - 需要主动调用 BDLauncherBridge.Launch() 完成框架初始化
-        /// - 框架就绪后启动 E2E TCP 服务
-        /// </summary>
-        private static void OnPlayModeStateChanged(PlayModeStateChange state)
-        {
-            if (state == PlayModeStateChange.EnteredPlayMode)
-            {
-                Debug.Log("[TalosE2E] PlayMode 已进入，开始初始化框架...");
-
-                // 延迟执行，等待 BDLauncher.Awake/Start 完成
-                EditorApplication.delayCall += () =>
-                {
-                    EditorApplication.update += WaitForBDLauncherThenInit;
-                };
-            }
-        }
-
-        /// <summary>
-        /// 等待 BDLauncher 单例就绪，然后主动调用框架初始化。
-        /// </summary>
-        private static int _initFrameCount = 0;
-
-        private static void WaitForBDLauncherThenInit()
-        {
-            _initFrameCount++;
-
-            // 超时检查（约 30 秒，60帧/秒）
-            if (_initFrameCount > 1800)
-            {
-                Debug.LogError("[TalosE2E] 等待 BDLauncher 就绪超时");
-                EditorApplication.update -= WaitForBDLauncherThenInit;
-                EditorApplication.Exit(1);
-                return;
-            }
-
-            // 检查 BDLauncher 单例是否已创建（Awake 已执行）
-            var launcher = BDFramework.BDLauncher.Inst;
-            if (launcher == null) return;
-
-            Debug.Log($"[TalosE2E] BDLauncher 就绪（{_initFrameCount} 帧），开始框架初始化");
-            EditorApplication.update -= WaitForBDLauncherThenInit;
-            _initFrameCount = 0;
-
-            // 主动调用框架启动入口，完成资源系统、SQLite、管理器的初始化
-            try
-            {
-                BDFramework.BDLauncherBridge.Launch();
-                Debug.Log("[TalosE2E] BDLauncherBridge.Launch() 调用成功");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"[TalosE2E] BDLauncherBridge.Launch() 失败: {ex}");
-                EditorApplication.Exit(1);
-                return;
-            }
-
-            // 框架初始化完成，启动 E2E 测试系统
-            EditorApplication.update += WaitForFrameworkReady;
-        }
-
-        /// <summary>
-        /// 等待框架子系统（BResources、Sqlite 等）初始化完成。
-        /// 通过检查 BApplication.IsPlaying 标记判断。
-        /// </summary>
-        private static int _readyFrameCount = 0;
-
-        private static void WaitForFrameworkReady()
-        {
-            _readyFrameCount++;
-
-            // 超时检查（约 10 秒）
-            if (_readyFrameCount > 600)
-            {
-                Debug.LogError("[TalosE2E] 等待框架就绪超时");
-                EditorApplication.update -= WaitForFrameworkReady;
-                EditorApplication.Exit(1);
-                return;
-            }
-
-            // BDLauncherBridge.Launch() 中会设置 BApplication.IsPlaying = true
-            if (BDFramework.Core.Tools.BApplication.IsPlaying)
-            {
-                Debug.Log($"[TalosE2E] 框架已就绪（{_readyFrameCount} 帧），启动 E2E 服务");
-                EditorApplication.update -= WaitForFrameworkReady;
-                _readyFrameCount = 0;
-
-                // 启动 E2E 测试系统
-                E2EAutoInit.CheckAndLaunch();
-            }
         }
 
         // ====================================================================
@@ -534,9 +437,10 @@ namespace Talos.E2E.Editor
         /// 触发时机：Unity 脚本编译完成后（包括进入/退出 PlayMode 的 Domain Reload）。
         /// 
         /// 恢复流程：
-        /// 1. 检查 EditorPrefs 中是否有 E2E 活跃标记
-        /// 2. 检查当前是否处于 PlayMode
-        /// 3. 如果两者都满足，恢复 EditorCommandHandler 委托并重启 TCP 服务
+        /// 职责（精简版）：
+        /// 1. 恢复 EditorCommandHandler 委托（Runtime→Editor 桥，Domain Reload 后静态变量被清零）
+        /// 2. 如果在 PlayMode 中：仅恢复委托，不启动 TCP——TCP 由 BDLauncherBridge.Launch() 驱动
+        /// 3. 如果不在 PlayMode（退出 PlayMode 后）：恢复静态 TCP 服务
         /// 
         /// 注意：此方法只在 Editor 环境中运行，不会影响真机构建。
         /// </summary>
@@ -553,24 +457,20 @@ namespace Talos.E2E.Editor
             int port = EditorPrefs.GetInt(PREFS_E2E_PORT, Protocol.DefaultPort);
             Debug.Log($"[TalosE2E] DidReloadScripts: 检测到 E2E 活跃标记, port={port}, isPlaying={EditorApplication.isPlaying}");
 
-            // Phase 2: 恢复 EditorCommandHandler 委托
+            // Phase 2: 恢复 EditorCommandHandler 委托（Domain Reload 后静态变量被清零，必须重新注入）
             TalosE2EBootstrap.EditorCommandHandler = EditorCommandDispatcher.Dispatch;
             Debug.Log("[TalosE2E] EditorCommandHandler 委托已恢复（DidReloadScripts）");
 
             if (EditorApplication.isPlaying)
             {
-                // Phase 3a: PlayMode 内恢复——延迟 2 秒让场景加载完成，然后直接启动静态 TCP
-                Debug.Log("[TalosE2E] PlayMode 内恢复 E2E 服务（延迟 2 秒等待场景加载）...");
-                EditorApplication.delayCall += () =>
-                {
-                    // delayCall 只延迟一帧，再用 update 计数 120 帧（约 2 秒）
-                    _restoreFrameCount = 0;
-                    EditorApplication.update += WaitForSceneThenRestore;
-                };
+                // Phase 3a: PlayMode 内——仅恢复委托，不启动 TCP。
+                // BDLauncherBridge.Launch() → TryStartE2EAutomation() 会统一驱动 E2E 启动。
+                Debug.Log("[TalosE2E] PlayMode 内恢复委托完成，TCP 启动将由 BDLauncherBridge 驱动");
             }
             else
             {
                 // Phase 3b: 非 PlayMode（退出 PlayMode 后）——恢复静态 TCP 服务
+                // 这处理了"退出 PlayMode 后 Editor 仍然需要保持 TCP 服务"的场景
                 Debug.Log("[TalosE2E] 非 PlayMode，恢复静态 TCP 服务...");
                 RestoreStaticService(port);
             }
@@ -578,6 +478,9 @@ namespace Talos.E2E.Editor
 
         /// <summary>
         /// 恢复静态模式的 TCP 服务（退出 PlayMode 后调用）。
+        /// 
+        /// 使用场景：从 PlayMode 退出回到 Editor 后，需要保持 TCP 连接以接收外部测试命令。
+        /// 重新初始化框架子系统、注册委托、启动静态 TCP、恢复 tick。
         /// </summary>
         private static void RestoreStaticService(int port)
         {
@@ -600,58 +503,6 @@ namespace Talos.E2E.Editor
             catch (System.Exception ex)
             {
                 Debug.LogError($"[TalosE2E] 恢复静态服务失败: {ex}");
-                ClearE2EMark();
-            }
-        }
-
-        /// <summary>
-        /// PlayMode 场景加载后恢复 TCP 服务——统一使用静态模式，最简单可靠。
-        /// 等 120 帧（约 2 秒）让场景加载完成，然后直接重启静态 TCP。
-        /// </summary>
-        private static int _restoreFrameCount = 0;
-
-        private static void WaitForSceneThenRestore()
-        {
-            _restoreFrameCount++;
-
-            // 超时（约 60 秒）
-            if (_restoreFrameCount > 3600)
-            {
-                Debug.LogError("[TalosE2E] PlayMode 内恢复 TCP 超时");
-                EditorApplication.update -= WaitForSceneThenRestore;
-                _restoreFrameCount = 0;
-                ClearE2EMark();
-                return;
-            }
-
-            // 不在 PlayMode 了，取消
-            if (!EditorApplication.isPlaying)
-            {
-                Debug.Log("[TalosE2E] 已退出 PlayMode，取消恢复");
-                EditorApplication.update -= WaitForSceneThenRestore;
-                _restoreFrameCount = 0;
-                return;
-            }
-
-            // 等 120 帧（约 2 秒）
-            if (_restoreFrameCount < 120) return;
-
-            EditorApplication.update -= WaitForSceneThenRestore;
-            _restoreFrameCount = 0;
-
-            int port = EditorPrefs.GetInt(PREFS_E2E_PORT, Protocol.DefaultPort);
-            Debug.Log($"[TalosE2E] PlayMode 场景已就绪（{120} 帧），启动静态 TCP 服务，端口: {port}");
-
-            try
-            {
-                TalosE2EBootstrap.EditorCommandHandler = EditorCommandDispatcher.Dispatch;
-                TalosE2EBootstrap.LaunchE2EStatic(port);
-                EditorApplication.update += EditorOnlyTick;
-                Debug.Log($"[TalosE2E] ✅ PlayMode 内 TCP 服务已恢复，端口: {port}");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"[TalosE2E] PlayMode 内 TCP 恢复失败: {ex}");
                 ClearE2EMark();
             }
         }

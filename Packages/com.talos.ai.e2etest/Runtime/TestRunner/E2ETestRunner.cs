@@ -105,6 +105,12 @@ namespace Talos.E2E
         /// 扫描范围：
         /// 1. 当前程序集（Talos.E2E.Runtime）——AOT 预编译的内置测试用例
         /// 2. 热更程序集——业务层动态添加的测试用例
+        /// 
+        /// 热更程序集发现策略：
+        /// - 优先通过 HotfixAssembliesHelper（旧版热更加载器维护的列表）
+        /// - 回退到 AppDomain.CurrentDomain.GetAssemblies() 全域扫描
+        ///   真机上 ScriptLoderAOT 使用 Assembly.Load 直接加载，
+        ///   不经过 HotfixAssembliesHelper，因此需要 AppDomain 全扫描兜底。
         /// </summary>
         static public void Initialize()
         {
@@ -119,20 +125,7 @@ namespace Talos.E2E
 
             // Phase 2: 扫描热更程序集
             // 业务层可通过热更 DLL 动态添加 E2E 测试用例
-            var hotfixTypes = HotfixAssembliesHelper.GetHotfixTypes();
-            if (hotfixTypes != null)
-            {
-                int beforeCount = DiscoveredTests.Count;
-                foreach (var type in hotfixTypes)
-                {
-                    ScanType(type);
-                }
-                UnityEngine.Debug.Log($"[TalosE2E] 热更程序集扫描完成，新增 {DiscoveredTests.Count - beforeCount} 个热更测试用例");
-            }
-            else
-            {
-                UnityEngine.Debug.Log("[TalosE2E] 无热更类型可扫描");
-            }
+            ScanHotfixAssemblies();
 
             // Phase 3: 按 suite 和 order 排序
             DiscoveredTests.Sort((a, b) =>
@@ -143,6 +136,132 @@ namespace Talos.E2E
             });
 
             UnityEngine.Debug.Log($"[TalosE2E] 测试发现完成，共 {DiscoveredTests.Count} 个测试用例");
+        }
+
+        /// <summary>
+        /// 扫描热更程序集中的 E2E 测试用例。
+        /// 
+        /// 真机上 ScriptLoderAOT 通过 Assembly.Load 直接加载热更 DLL，
+        /// 不经过 HotfixAssembliesHelper，因此需要多策略扫描：
+        /// 
+        /// 策略 1：通过 HotfixAssembliesHelper.GetHotfixTypes()（如果已注册）
+        /// 策略 2：通过 AppDomain 全扫描，过滤非系统程序集
+        /// </summary>
+        static private void ScanHotfixAssemblies()
+        {
+            var scannedAssemblies = new HashSet<string>();
+            int beforeCount = DiscoveredTests.Count;
+
+            // 策略 1: 通过 HotfixAssembliesHelper 扫描（旧版热更加载器）
+            var hotfixTypes = HotfixAssembliesHelper.GetHotfixTypes();
+            if (hotfixTypes != null && hotfixTypes.Count > 0)
+            {
+                foreach (var type in hotfixTypes)
+                {
+                    ScanType(type);
+                    if (type.Assembly != null)
+                    {
+                        scannedAssemblies.Add(type.Assembly.FullName);
+                    }
+                }
+                UnityEngine.Debug.Log($"[TalosE2E] HotfixAssembliesHelper 扫描: 新增 {DiscoveredTests.Count - beforeCount} 个热更测试用例");
+            }
+
+            // 策略 2: AppDomain 全扫描兜底——覆盖 ScriptLoderAOT 直接 Assembly.Load 的场景
+            // 真机上热更 DLL 通过 ScriptLoderAOT.LoadHotfixDLL() 用 Assembly.Load 加载，
+            // 但不注册到 HotfixAssembliesHelper，所以需要通过 AppDomain 发现。
+            int beforeAppDomain = DiscoveredTests.Count;
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                // 跳过已扫描的程序集
+                if (scannedAssemblies.Contains(assembly.FullName)) continue;
+
+                var name = assembly.GetName().Name;
+
+                // 只扫描可能是业务热更的程序集：
+                // - 排除系统程序集（mscorlib、System.*、Unity.*、Mono.* 等）
+                // - 排除当前 AOT 程序集（已扫描）
+                // - 包含热更特征名称（Assembly-CSharp、Game.*、hotfix 等）
+                if (IsSystemAssembly(name)) continue;
+                if (name == selfAssemblyName) continue;
+
+                ScanAssembly(assembly);
+                scannedAssemblies.Add(assembly.FullName);
+            }
+            UnityEngine.Debug.Log($"[TalosE2E] AppDomain 全扫描: 新增 {DiscoveredTests.Count - beforeAppDomain} 个热更测试用例");
+
+            if (DiscoveredTests.Count == beforeCount)
+            {
+                UnityEngine.Debug.Log("[TalosE2E] 无热更测试用例");
+            }
+        }
+
+        /// <summary>
+        /// 当前 AOT 程序集名称，用于在 AppDomain 扫描时跳过。
+        /// </summary>
+        static private readonly string selfAssemblyName = typeof(E2ETestRunner).Assembly.GetName().Name;
+
+        /// <summary>
+        /// 判断程序集名称是否为系统程序集，避免扫描 Unity 引擎和 .NET 运行时。
+        /// </summary>
+        /// <param name="assemblyName">程序集短名称。</param>
+        /// <returns>如果是系统程序集返回 true。</returns>
+        static private bool IsSystemAssembly(string assemblyName)
+        {
+            if (string.IsNullOrEmpty(assemblyName)) return true;
+
+            // 系统前缀过滤
+            if (assemblyName.StartsWith("mscorlib", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("System.", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("Mono.", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("Unity.", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("UnityEngine", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("UnityEditor", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("netstandard", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("Google.Protobuf", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("MessagePack", StringComparison.OrdinalIgnoreCase)) return true;
+            if (assemblyName.StartsWith("Newtonsoft", StringComparison.OrdinalIgnoreCase)) return true;
+
+            // 已知的框架/第三方程序集（非业务热更）
+            var knownNonHotfix = new HashSet<string>()
+            {
+                "LitJson",
+                "BDFramework.Runtime",
+                "BDFramework.Editor",
+                "BDFramework.Core",
+                "BDFramework.AOT",
+                "BDFramework.EditorTest",
+                "BDFramework.Test",
+                "BDFramework.core.test",
+                "HybridCLR.Runtime",
+                "HybridCLR.Editor",
+                "UniTask",
+                "UniTask.Addressables",
+                "UniTask.DOTween",
+                "UniTask.Editor",
+                "UniTask.Linq",
+                "UniTask.TextMeshPro",
+                "DOTween",
+                "DOTween.Ex",
+                "ZString",
+                "Sirenix.OdinInspector",
+                "Obfuz.Runtime",
+                "Obfuz.Editor",
+                "Obfuz4HybridCLR.Editor",
+                "NuGet",
+                "com.logviewer.runtime",
+                "com.logviewer.editor",
+                "Unity.InternalAPIEngineBridge.010",
+                "Unity.AssetGraph",
+                "Talos.E2E.Runtime",
+                "Talos.E2E.Editor",
+                "EditorSetting",
+                "GameClaw.Unity3d",
+                "GameLogic", // 非热更的 AOT GameLogic
+            };
+            if (knownNonHotfix.Contains(assemblyName)) return true;
+
+            return false;
         }
 
         /// <summary>

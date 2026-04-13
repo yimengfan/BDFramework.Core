@@ -73,8 +73,15 @@ namespace Talos.E2E
         {
             if (_instance != null)
             {
-                Debug.LogWarning("[TalosE2E] E2E 测试引导已启动，忽略重复调用");
-                return;
+                Debug.LogWarning("[TalosE2E] E2E 测试引导已启动，先释放旧实例再重新启动");
+                Shutdown();
+            }
+
+            // 同样释放可能残留的静态服务
+            if (_staticServer != null)
+            {
+                Debug.LogWarning("[TalosE2E] 发现残留的静态 TCP 服务，先释放");
+                Shutdown();
             }
 
             Debug.Log("[TalosE2E] 正在启动 E2E 测试引导...");
@@ -102,16 +109,11 @@ namespace Talos.E2E
         /// <param name="port">TCP 监听端口，默认 10002。</param>
         public static void LaunchE2EStatic(int port = Protocol.DefaultPort)
         {
-            if (_instance != null)
+            // 如果已有 MonoBehaviour 实例或静态服务在运行，先释放再重新启动
+            if (_instance != null || _staticServer != null)
             {
-                Debug.LogWarning("[TalosE2E] E2E 测试引导已启动（MonoBehaviour 模式），忽略静态模式调用");
-                return;
-            }
-
-            if (_staticServer != null)
-            {
-                Debug.LogWarning("[TalosE2E] E2E 静态服务已启动，忽略重复调用");
-                return;
+                Debug.LogWarning("[TalosE2E] 发现已有的 E2E 服务（MonoBehaviour 或静态），先释放再重新启动");
+                Shutdown();
             }
 
             Debug.Log("[TalosE2E] 正在启动 E2E 测试引导（纯静态模式，无 MonoBehaviour）...");
@@ -138,11 +140,31 @@ namespace Talos.E2E
 
             // Phase 2: 创建并启动 TCP 服务端。
             _server = new TalosTcpServer(port);
-            _server.OnMessage += HandleMessage;
+            // 使用队列模式：TCP 工作线程入队，主线程 Update() 出队处理。
+            // 确保所有 Unity API（persistentDataPath、Shader.Find 等）在主线程执行。
+            _server.OnMessage += EnqueueMessage;
             _server.OnError += (err) => Debug.LogError($"[TalosE2E] TCP 错误: {err}");
             _server.Start();
 
             Debug.Log($"[TalosE2E] E2E 测试系统就绪，端口: {port}，测试用例数: {E2ETestRunner.GetTestList().Count}");
+        }
+
+        /// <summary>
+        /// 将 TCP 工作线程收到的消息入队到主线程队列。
+        /// 不在 TCP 线程直接处理——Unity API 只能在主线程调用。
+        /// </summary>
+        private void EnqueueMessage(string json)
+        {
+            _mainThreadQueue.Enqueue(json);
+        }
+
+        /// <summary>
+        /// Unity 生命周期：每帧处理 TCP 消息队列。
+        /// 确保 Unity API 在主线程安全执行。
+        /// </summary>
+        private void Update()
+        {
+            ProcessMainThreadActions();
         }
 
         /// <summary>
@@ -365,6 +387,60 @@ namespace Talos.E2E
         }
 
         /// <summary>
+        /// 统一发送响应——自动路由到 MonoBehaviour 或静态 TCP 服务端。
+        /// 在主线程处理消息时使用，确保无论哪种模式都能正确发送。
+        /// </summary>
+        private static void BroadcastResponse(object data)
+        {
+            var json = JsonMapper.ToJson(data);
+            // 优先使用 MonoBehaviour 实例的服务端
+            if (_instance != null && _instance._server != null)
+            {
+                _instance._server.Broadcast(json);
+            }
+            // 回退到静态服务端
+            else if (_staticServer != null)
+            {
+                _staticServer.Broadcast(json);
+            }
+        }
+
+        /// <summary>
+        /// 统一释放所有 E2E 资源——销毁 MonoBehaviour 实例、停止静态 TCP 服务、清空消息队列。
+        /// 在 LaunchE2E / LaunchE2EStatic 发现已有连接时调用，确保端口和资源被正确释放。
+        /// </summary>
+        public static void Shutdown()
+        {
+            Debug.Log("[TalosE2E] 正在释放所有 E2E 资源...");
+
+            // Phase 1: 停止 MonoBehaviour 实例的 TCP 服务
+            if (_instance != null)
+            {
+                _instance._server?.Stop();
+                _instance._server = null;
+
+                // 销毁 GameObject
+                if (_instance.gameObject != null)
+                {
+                    UnityEngine.Object.Destroy(_instance.gameObject);
+                }
+                _instance = null;
+            }
+
+            // Phase 2: 停止静态 TCP 服务
+            if (_staticServer != null)
+            {
+                _staticServer.Stop();
+                _staticServer = null;
+            }
+
+            // Phase 3: 清空消息队列，避免残留消息被新实例处理
+            while (_mainThreadQueue.TryDequeue(out _)) { }
+
+            Debug.Log("[TalosE2E] E2E 资源释放完成");
+        }
+
+        /// <summary>
         /// Unity 生命周期：应用退出时清理 TCP 服务端资源。
         /// </summary>
         private void OnApplicationQuit()
@@ -418,6 +494,7 @@ namespace Talos.E2E
         /// <summary>
         /// 在主线程上处理单条协议消息——路由到对应的处理逻辑。
         /// 所有 Unity API 调用在此方法及其子方法中执行，确保线程安全。
+        /// 使用 BroadcastResponse 自动路由到 MonoBehaviour 或静态 TCP 服务端。
         /// </summary>
         private static void ProcessSingleMessageOnMainThread(string json)
         {
@@ -431,23 +508,23 @@ namespace Talos.E2E
                 switch (type)
                 {
                     case Protocol.MsgHello:
-                        StaticSendResponse(new { type = Protocol.MsgHelloAck, version = "0.1.0", testCount = E2ETestRunner.GetTestList().Count });
+                        BroadcastResponse(new { type = Protocol.MsgHelloAck, version = "0.1.0", testCount = E2ETestRunner.GetTestList().Count });
                         break;
 
                     case Protocol.MsgPing:
-                        StaticSendResponse(new { type = Protocol.MsgPong, timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds() });
+                        BroadcastResponse(new { type = Protocol.MsgPong, timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds() });
                         break;
 
                     case Protocol.MsgListTests:
                         var tests = E2ETestRunner.GetTestList();
-                        StaticSendResponse(new { type = Protocol.MsgTestList, tests });
+                        BroadcastResponse(new { type = Protocol.MsgTestList, tests });
                         break;
 
                     case Protocol.MsgRunTest:
                         var methodName = (string)msg["methodName"];
                         var singleResult = E2ETestRunner.RunSingle(methodName);
-                        StaticSendResponse(new { type = Protocol.MsgTestResult, result = singleResult });
-                        StaticSendResponse(new { type = Protocol.MsgAllTestsComplete, total = 1, passed = singleResult.passed ? 1 : 0, failed = singleResult.passed ? 0 : 1 });
+                        BroadcastResponse(new { type = Protocol.MsgTestResult, result = singleResult });
+                        BroadcastResponse(new { type = Protocol.MsgAllTestsComplete, total = 1, passed = singleResult.passed ? 1 : 0, failed = singleResult.passed ? 0 : 1 });
                         break;
 
                     case Protocol.MsgRunSuite:
@@ -455,9 +532,9 @@ namespace Talos.E2E
                         var suiteResults = E2ETestRunner.RunSuite(suite);
                         foreach (var r in suiteResults)
                         {
-                            StaticSendResponse(new { type = Protocol.MsgTestResult, result = r });
+                            BroadcastResponse(new { type = Protocol.MsgTestResult, result = r });
                         }
-                        StaticSendResponse(new
+                        BroadcastResponse(new
                         {
                             type = Protocol.MsgAllTestsComplete,
                             total = suiteResults.Count,
@@ -472,8 +549,8 @@ namespace Talos.E2E
 
                     case Protocol.MsgAction:
                         var action = (string)msg["action"];
-                        Debug.Log($"[TalosE2E] 执行动作（静态模式）: {action}");
-                        StaticSendResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"未实现的动作: {action}" });
+                        Debug.Log($"[TalosE2E] 执行动作（主线程）: {action}");
+                        BroadcastResponse(new { type = Protocol.MsgActionResult, action, success = false, error = $"未实现的动作: {action}" });
                         break;
 
                     case Protocol.MsgEditorCommand:
@@ -481,20 +558,20 @@ namespace Talos.E2E
                         break;
 
                     default:
-                        StaticSendResponse(new { type = Protocol.MsgError, message = $"未知消息类型: {type}" });
+                        BroadcastResponse(new { type = Protocol.MsgError, message = $"未知消息类型: {type}" });
                         break;
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[TalosE2E] 主线程消息处理异常: {ex}");
-                StaticSendResponse(new { type = Protocol.MsgError, message = ex.Message });
+                BroadcastResponse(new { type = Protocol.MsgError, message = ex.Message });
             }
         }
 
         /// <summary>
-        /// 静态模式下同步执行所有测试用例并逐条推送结果。
-        /// 不使用协程，直接同步执行。
+        /// 同步执行所有测试用例并逐条推送结果（主线程安全）。
+        /// 不使用协程，直接同步执行——适用于 MonoBehaviour 和静态两种模式。
         /// </summary>
         private static void HandleStaticRunAllTests()
         {
@@ -507,10 +584,10 @@ namespace Talos.E2E
             {
                 total++;
                 if (result.passed) passed++; else failed++;
-                StaticSendResponse(new { type = Protocol.MsgTestResult, result });
+                BroadcastResponse(new { type = Protocol.MsgTestResult, result });
             });
 
-            StaticSendResponse(new
+            BroadcastResponse(new
             {
                 type = Protocol.MsgAllTestsComplete,
                 total,
@@ -518,16 +595,16 @@ namespace Talos.E2E
                 failed
             });
 
-            Debug.Log($"[TalosE2E] 全部测试完成（静态模式）: 总计={total}, 通过={passed}, 失败={failed}");
+            Debug.Log($"[TalosE2E] 全部测试完成: 总计={total}, 通过={passed}, 失败={failed}");
         }
 
         /// <summary>
-        /// 静态模式下向所有已连接客户端发送 JSON 响应。
+        /// 旧版静态模式发送响应——保留向后兼容。
+        /// 新代码应使用 BroadcastResponse，自动路由到活跃的 TCP 服务端。
         /// </summary>
         private static void StaticSendResponse(object data)
         {
-            var json = JsonMapper.ToJson(data);
-            _staticServer?.Broadcast(json);
+            BroadcastResponse(data);
         }
 
         /// <summary>
@@ -558,7 +635,7 @@ namespace Talos.E2E
                 var result = EditorCommandHandler(command, parameters);
 
                 Debug.Log($"[TalosE2E] 编辑器命令完成: {command}, 成功=true");
-                StaticSendResponse(new
+                BroadcastResponse(new
                 {
                     type = Protocol.MsgEditorCommandResult,
                     requestId,
@@ -570,7 +647,7 @@ namespace Talos.E2E
             catch (Exception ex)
             {
                 Debug.LogError($"[TalosE2E] 编辑器命令异常: {command} -> {ex}");
-                StaticSendResponse(new
+                BroadcastResponse(new
                 {
                     type = Protocol.MsgEditorCommandResult,
                     requestId,
