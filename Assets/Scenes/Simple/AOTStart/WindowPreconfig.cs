@@ -2,15 +2,20 @@
 using System.IO;
 using System.Linq;
 using BDFramework;
+using BDFramework.Configure;
 using BDFramework.Core.Tools;
 using BDFramework.ResourceMgr;
+using Game.Config;
 using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// AOT 界面 没办法使用框架加成
+/// </summary>
 public class WindowPreconfig : MonoBehaviour
 {
-    private InputField inputField;
+    // private InputField inputField;
     private Text text_DownloadProcess;
     private Button btn_Download;
     private Button btn_DownloadRepair;
@@ -38,13 +43,15 @@ public class WindowPreconfig : MonoBehaviour
         this.btn_GetSubPackage.onClick.AddListener(OnClick_GetSubPackage);
         this.btn_ClearPersistent.onClick.AddListener(OnClick_ClearPersistent);
         //
+
+        var config = GameConfigManager.Inst.GetConfig<ServerConfigProcessor.Config>();
         if (Application.isEditor)
         {
-            inputField.text = "127.0.0.1:10086/AssetBundle";
+            inputField.text = config.FileServerUrl;
         }
         else
         {
-            inputField.text = "192.168.0.1:10086/AssetBundle";
+            inputField.text = config.FileServerUrl;
         }
     }
 
@@ -54,48 +61,10 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     void Onclick_PassAndLaunch()
     {
-        //直接启动
-        if (!TryLaunchHotfixEntry())
-        {
-            return;
-        }
-
+        //启动
+        BDLauncherHotfix.Launch();
         //
         this.StartCoroutine(IE_Destroy());
-    }
-
-    private static bool TryLaunchHotfixEntry()
-    {
-        var launcherType = System.AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(GetLoadableTypes)
-            .FirstOrDefault(type => type.FullName == "BDFramework.BDLauncherBridge"
-                                    || type.FullName == "BDFramework.BDLauncherHotfix"
-                                    || type.Name == "BDLauncherBridge"
-                                    || type.Name == "BDLauncherHotfix");
-
-        var launchMethod = launcherType?.GetMethod("Launch",
-            System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic |
-            System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.FlattenHierarchy);
-        if (launchMethod == null)
-        {
-            Debug.LogWarning("未找到 BDLauncherBridge/BDLauncherHotfix 的 Launch 入口，当前工程可能未加载对应热更入口程序集。");
-            return false;
-        }
-
-        launchMethod.Invoke(null, null);
-        return true;
-    }
-
-    private static System.Collections.Generic.IEnumerable<System.Type> GetLoadableTypes(System.Reflection.Assembly assembly)
-    {
-        try
-        {
-            return assembly.GetTypes();
-        }
-        catch (System.Reflection.ReflectionTypeLoadException exception)
-        {
-            return exception.Types.Where(type => type != null);
-        }
     }
 
 
@@ -104,12 +73,15 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void OnClick_DownLoadAndLaunch()
     {
-        Debug.Log(Application.persistentDataPath);
-        var url = "http://" + this.inputField.text;
+        var config = GameConfigManager.Inst.GetConfig<ServerConfigProcessor.Config>();
+        
+        Debug.Log(BApplication.persistentDataPath);
+        var url = config.FileServerUrl;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        
-        BResources.StartAssetsVersionControl(UpdateMode.CompareWithRepairCoreAssets, url, null, (curDownload, allDownloadList) =>
+
+        BResources.StartAssetsVersionControl(UpdateMode.CompareWithRepairCoreAssets, url, null,
+            (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -134,7 +106,7 @@ public class WindowPreconfig : MonoBehaviour
                     {
                         this.text_DownloadProcess.text = "下载完毕";
                         //启动
-                       // this.Onclick_PassAndLaunch();
+                        // this.Onclick_PassAndLaunch();
                     }
                         break;
                     case AssetsVersionController.RetStatus.SuccessNeedRestart:
@@ -157,54 +129,54 @@ public class WindowPreconfig : MonoBehaviour
     /// </summary>
     private void Onclick_Download_RepairMode()
     {
-        Debug.Log(Application.persistentDataPath);
+        Debug.Log(BApplication.persistentDataPath);
         var url = "http://" + this.inputField.text;
-        float totalSize =0;
+        float totalSize = 0;
         float curDoanloadSize = 0;
         BResources.StartAssetsVersionControl(UpdateMode.RepairFull, url, null, (curDownload, allDownloadList) =>
-        {
-            if (totalSize == 0)
             {
-                foreach (var item in allDownloadList)
+                if (totalSize == 0)
                 {
-                    totalSize += item.FileSize;
+                    foreach (var item in allDownloadList)
+                    {
+                        totalSize += item.FileSize;
+                    }
+
+                    curDoanloadSize = 0;
                 }
 
-                curDoanloadSize = 0;
-            }
-
-            curDoanloadSize += curDownload.FileSize;
-            //进度通知,显示下载的
-            this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
-        },
-        (status, msg) =>
-        {
-            //下载状态
-            switch (status)
+                curDoanloadSize += curDownload.FileSize;
+                //进度通知,显示下载的
+                this.text_DownloadProcess.text = string.Format("{0}KB / {1}KB", curDoanloadSize, totalSize);
+            },
+            (status, msg) =>
             {
-                case AssetsVersionController.RetStatus.Success:
+                //下载状态
+                switch (status)
                 {
-                    this.text_DownloadProcess.text = "下载完毕";
-                    //启动
-                    // this.Onclick_PassAndLaunch();
+                    case AssetsVersionController.RetStatus.Success:
+                    {
+                        this.text_DownloadProcess.text = "下载完毕";
+                        //启动
+                        // this.Onclick_PassAndLaunch();
+                    }
+                        break;
+                    case AssetsVersionController.RetStatus.SuccessNeedRestart:
+                    {
+                        this.text_DownloadProcess.text = "下载完毕，请重启游戏";
+                    }
+                        break;
+                    case AssetsVersionController.RetStatus.Error:
+                    {
+                        //错误
+                        this.text_DownloadProcess.text = msg;
+                    }
+                        break;
                 }
-                    break;
-                case AssetsVersionController.RetStatus.SuccessNeedRestart:
-                {
-                    this.text_DownloadProcess.text = "下载完毕，请重启游戏";
-                }
-                    break;
-                case AssetsVersionController.RetStatus.Error:
-                {
-                    //错误
-                    this.text_DownloadProcess.text = msg;
-                }
-                    break;
-            }
-        });
+            });
     }
-    
-    
+
+
     /// <summary>
     /// 获取子包
     /// </summary>
@@ -214,7 +186,7 @@ public class WindowPreconfig : MonoBehaviour
         BResources.GetServerSubPacks(url, (map) =>
         {
             //获取到子包
-            Debug.Log("获取到子包信息:\n" + JsonMapper.ToJson(map,true));
+            Debug.Log("获取到子包信息:\n" + JsonMapper.ToJson(map, true));
 
             //全隐藏
             var grid = this.transform.Find("grid_SubPack");
@@ -222,6 +194,7 @@ public class WindowPreconfig : MonoBehaviour
             {
                 child.gameObject.SetActive(false);
             }
+
             //显示
             var idx = 0;
             foreach (var kv in map)
@@ -236,15 +209,13 @@ public class WindowPreconfig : MonoBehaviour
                     //下载
                     this.Onclick_DownloadSubPackageLoadAndLaunch((kv.Key));
                 });
-                   
+
                 idx++;
             }
-            
         });
-        
     }
-    
-    
+
+
     /// <summary>
     /// 下载分包且启动
     /// </summary>
@@ -255,7 +226,8 @@ public class WindowPreconfig : MonoBehaviour
         var url = "http://" + this.inputField.text;
         float totalSize = -1;
         float curDoanloadSize = -1;
-        BResources.StartAssetsVersionControl(UpdateMode.CompareSimple, url, subPackageName, (curDownload, allDownloadList) =>
+        BResources.StartAssetsVersionControl(UpdateMode.CompareSimple, url, subPackageName,
+            (curDownload, allDownloadList) =>
             {
                 if (totalSize == -1)
                 {
@@ -278,7 +250,7 @@ public class WindowPreconfig : MonoBehaviour
                     case AssetsVersionController.RetStatus.Success:
                     {
                         this.text_DownloadProcess.text = "下载完毕";
-                        
+
                         Debug.Log("分包下载完毕,此时资源不全,进入游戏可能会有bug!");
                     }
                         break;
@@ -299,7 +271,6 @@ public class WindowPreconfig : MonoBehaviour
     }
 
 
-    
     /// <summary>
     /// 删除
     /// </summary>
@@ -320,9 +291,10 @@ public class WindowPreconfig : MonoBehaviour
             var path = IPath.Combine(BApplication.persistentDataPath, BApplication.GetPlatformLoadPath(runtime));
             if (Directory.Exists(path))
             {
-                Directory.Delete(path,true);
+                Directory.Delete(path, true);
             }
         }
+
         //清理完毕
         var dirs = Directory.GetDirectories(Application.persistentDataPath, "*");
         Debug.Log(Application.persistentDataPath);

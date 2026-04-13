@@ -39,7 +39,7 @@ public class Window_DemoMain : AWindow
     [ButtonOnclick("Grid/btn_UnitTest")]
     private void btn_UnitTest()
     {
-        if (HotfixAssembliesHelper.IsRunning)
+        if (ScriptLoder.IsRunning)
         {
             TestRunner.RunHotfixUnitTest();
         }

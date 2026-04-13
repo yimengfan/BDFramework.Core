@@ -115,7 +115,7 @@ namespace BDFramework.UnitTest
         static public Dictionary<Type, List<TestMethodData>> CollectTestClassData(TestType testType)
         {
             var retMap = new Dictionary<Type, List<TestMethodData>>();
-            List<Type> types = new List<Type>();
+            // List<Type> types = new List<Type>();
             //判断不同的模式
 
             // if (testType == TestType.MonoOrCLR)
@@ -125,7 +125,7 @@ namespace BDFramework.UnitTest
             // }
             // else if (testType == TestType.ILRuntime)
             // {
-                types = HotfixAssembliesHelper.GetHotfixTypes();
+              var  types = ScriptLoder.GetHostingTypes();
             // }
 
             var attribute = typeof(UnitTestBaseAttribute);
@@ -152,7 +152,7 @@ namespace BDFramework.UnitTest
                 foreach (MethodInfo method in methods)
                 {
                     UnitTestBaseAttribute mattr = null;
-                    if (HotfixAssembliesHelper.IsRunning)
+                    if (ScriptLoder.IsRunning)
                     {
                         mattr = method.GetAttributeInILRuntime<UnitTestBaseAttribute>();
                     }

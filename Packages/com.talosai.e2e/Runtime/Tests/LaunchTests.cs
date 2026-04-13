@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using BDFramework;
 using BDFramework.ResourceMgr;
@@ -41,7 +42,7 @@ namespace Talos.E2E.Tests
             else
             {
                 // Player 构建模式下，热更 DLL 必须通过 LoadHotfix() 加载
-                var isRunning = HotfixAssembliesHelper.IsRunning;
+                var isRunning = ScriptLoder.IsRunning;
                 if (!isRunning)
                 {
                     throw new Exception("热更 DLL 未加载: HotfixAssembliesHelper.IsRunning = false");
@@ -65,12 +66,13 @@ namespace Talos.E2E.Tests
             }
             else
             {
-                var types = HotfixAssembliesHelper.GetHotfixTypes();
-                if (types == null || types.Count == 0)
+                var types = ScriptLoder.GetHostingTypes();
+                
+                if (types == null || types.Count() == 0)
                 {
-                    throw new Exception($"热更类型列表为空: count={types?.Count ?? 0}");
+                    throw new Exception($"热更类型列表为空: count={types?.Count() ?? 0}");
                 }
-                Debug.Log($"[E2E] 发现 {types.Count} 个热更类型（Player 模式）");
+                Debug.Log($"[E2E] 发现 {types.Count()} 个热更类型（Player 模式）");
             }
         }
 

@@ -1628,7 +1628,7 @@ namespace BDFramework.ResourceMgr
             Directory.CreateDirectory(cacheDir);
 
             var state = LoadFileServerState(cacheDir);
-            var versionUrl = BuildFileServerVersionManifestUrl(serverUrl);
+            var versionUrl = (serverUrl);
 
             // Phase 1: 优先请求远端共享版控文件，确认当前服务器是否启用了文件服务器协议。
             LogFileServerFlow($"开始请求共享版控文件 url={versionUrl}", Color.cyan);
@@ -2955,28 +2955,13 @@ namespace BDFramework.ResourceMgr
             return string.Equals(hash, assetItem.HashName, StringComparison.OrdinalIgnoreCase);
         }
 
-        private static string BuildFileServerVersionManifestUrl(string serverUrl)
-        {
-            // Artifact file server exposes downloads under /files/{path}; the manifest
-            // is uploaded by Python as global_version.info at the root of the store,
-            // so the download URL is serverUrl/files/global_version.info.
-            return CombineUrl(CombineUrl(serverUrl, "files"), FileServerVersionManifestFileName);
-        }
 
-        /// <summary>
-        /// 拼接文件服务器下载根路径。Artifact file server 所有下载走 /files/{path} 路由，
-        /// 所以统一在 serverUrl 后追加 files 前缀再接具体文件路径。
-        /// </summary>
-        private static string BuildFileServerDownloadRoot(string serverUrl)
-        {
-            return CombineUrl(serverUrl, "files");
-        }
 
         private static string BuildFileServerComponentRemoteRoot(string serverUrl, string platformPath,
             FileServerComponentKind componentKind,
             string componentVersion)
         {
-            var downloadRoot = BuildFileServerDownloadRoot(serverUrl);
+            var downloadRoot = (serverUrl);
             switch (componentKind)
             {
                 case FileServerComponentKind.Code:

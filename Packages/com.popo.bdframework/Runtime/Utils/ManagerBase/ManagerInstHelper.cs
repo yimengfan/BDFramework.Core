@@ -18,46 +18,6 @@ namespace BDFramework.Mgr
         /// </summary>
         public static List<IMgr> MgrList { get; private set; } = new List<IMgr>();
 
-        /// <summary>
-        /// 获取框架托管的所有类型
-        /// </summary>
-        /// <returns></returns>
-        static public Type[] GetHostingTypes()
-        {
-            BDebug.LogWatchBegin("加载所有DLL-types");
-            var typeList = new List<Type>();
-            Assembly[] assemblyList = System.AppDomain.CurrentDomain.GetAssemblies();
-            foreach (var assembly in assemblyList)
-            {
-                //只搜集以下DLLType
-                if (
-                    //框架
-                    assembly.FullName.StartsWith("BDFramework") //框架相关的类
-                    //默认 class
-                    || assembly.FullName.StartsWith("Assembly-CSharp,") //unity未定义Assembly的class
-                    || assembly.FullName.StartsWith("Assembly-CSharp-firstpass,") //unity未定义Standard Assets的class
-                    //引擎相关
-                    || assembly.FullName.StartsWith("UnityEngine.UI") //UnityUI类
-                    //游戏业务
-                    || assembly.FullName.StartsWith("Game.") //所有以Game.开头定义的Assembly,可以定义AssemblyDefine以该字符开头则会被收集
-                    || assembly.FullName.Contains("@main") //所有包含@main的Assembly,可以定义AssemblyDefine以该字符开头则会被收集
-                   )
-                {
-                    var ts = assembly.GetTypes().Where((t) => t != null && t.IsClass && !t.IsNested);
-                    typeList.AddRange(ts);
-                }
-            }
-
-            Debug.Log($"框架托管DLL:{ string.Join(",", typeList.Select(t => t.FullName)) }");
-            
-#if UNITY_EDITOR
-            typeList.Sort((a, b) => a.FullName.CompareTo(b.FullName));
-#endif
-            var types = typeList.ToArray();
-            BDebug.LogWatchEnd("加载所有DLL-types");
-            return types;
-        }
-
 
         /// <summary>
         /// 加载管理器 实例

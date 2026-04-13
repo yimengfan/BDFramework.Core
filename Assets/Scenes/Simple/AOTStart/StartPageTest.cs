@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class StartPageTest : MonoBehaviour
 {
-    // Start is called before the first frame update
+   /// <summary>
+   /// AOT 界面 没办法使用框架加成
+   /// </summary>
     void Awake()
     {
 // #if UNITY_EDITOR

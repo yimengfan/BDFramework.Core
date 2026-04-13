@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using LitJson;
 using UnityEngine;
@@ -153,8 +154,8 @@ namespace Talos.E2E
             int beforeCount = DiscoveredTests.Count;
 
             // 策略 1: 通过 HotfixAssembliesHelper 扫描（旧版热更加载器）
-            var hotfixTypes = HotfixAssembliesHelper.GetHotfixTypes();
-            if (hotfixTypes != null && hotfixTypes.Count > 0)
+            var hotfixTypes = ScriptLoder.GetHostingTypes();
+            if (hotfixTypes != null && hotfixTypes.Count() > 0)
             {
                 foreach (var type in hotfixTypes)
                 {

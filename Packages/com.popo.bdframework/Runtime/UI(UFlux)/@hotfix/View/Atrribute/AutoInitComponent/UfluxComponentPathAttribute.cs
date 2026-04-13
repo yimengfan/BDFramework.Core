@@ -45,7 +45,7 @@ namespace BDFramework.UFlux
             }
             else
             {
-                var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
+                var list = (IList) ScriptLoder.CreateHotfixInstance(fieldType);
                 fieldInfo.SetValue(winComponent, list);
 
                 // 泛型T类型
@@ -110,7 +110,7 @@ namespace BDFramework.UFlux
             }
             else
             {
-                var list = (IList) HotfixAssembliesHelper.CreateHotfixInstance(fieldType);
+                var list = (IList)ScriptLoder.CreateHotfixInstance(fieldType);
                 propertyInfo.SetValue(winComponent, list);
 
                 // 泛型T类型

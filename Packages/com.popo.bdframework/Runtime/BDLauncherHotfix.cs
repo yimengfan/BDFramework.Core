@@ -62,13 +62,13 @@ namespace BDFramework
             // Phase 4: 依次启动资源、SQLite 与热更管理器，真正进入框架业务运行态。
             BResources.Init(Config.ArtRoot, firstLoadDir, secondLoadDir);
             SqliteLoder.Init(Config.SQLRoot, firstLoadDir, secondLoadDir);
-            HotfixScriptLoder.Start();
+            ScriptLoder.Start();
 
             // Phase 5: 尝试通过反射启动 E2E 测试系统。
             // 使用反射避免直接依赖 Talos.E2E 程序集，
             // 与 QuitFramework() 中的反射模式保持一致。
             // 当 Talos.E2E 包不存在或非 Debug 构建时，此调用安全无副作用。
-            TryStartE2EAutomation();
+            TryStartE2EFramework();
         }
 
         #endregion
@@ -86,7 +86,7 @@ namespace BDFramework
         /// - Editor 非进 PlayMode：由 LaunchE2EEditorOnly 直接启动静态 TCP，不经此路径
         /// </summary>
         [Conditional("DEBUG")]
-        static private void TryStartE2EAutomation()
+        static private void TryStartE2EFramework()
         {
             try
             {
@@ -122,14 +122,14 @@ namespace BDFramework
 
         #region 生命周期
 
-                /// <summary>
-                /// 在 Editor 退出阶段释放 SQLite 和热更程序集相关资源。
-                /// </summary>
+        /// <summary>
+        /// 在 Editor 退出阶段释放 SQLite 和热更程序集相关资源。
+        /// </summary>
             public  void OnApplicationQuit()
         {
 #if UNITY_EDITOR
             SqliteLoder.Close();
-            HotfixAssembliesHelper.Dispose();
+            ScriptLoder.Dispose();
 #endif
         }
 
